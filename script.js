@@ -217,6 +217,10 @@ function step(dir) {
   renderTrack();
 }
 
+function updatePlayButton() {
+  window.__mp.playBtn.textContent = playing ? "⏸" : "▶";
+}
+
 /* ---------- music controls ------------------------------------------------ */
 
 function initMusicControls() {
@@ -224,8 +228,11 @@ function initMusicControls() {
   const prevBtn = $("prev-btn");
   const nextBtn = $("next-btn");
   const muteBtn = $("mute-btn");
-  const audio = $("audio");
   const muteIcon = $("mute-icon");
+  const audio = $("audio");
+
+  // Store reference for sync
+  window.__mp = { playBtn, audio, muteBtn, muteIcon, sync: updatePlayButton };
 
   playBtn.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -235,7 +242,7 @@ function initMusicControls() {
     } else {
       audio.pause();
     }
-    sync();
+    updatePlayButton();
   });
 
   prevBtn.addEventListener("click", (e) => {
@@ -252,12 +259,12 @@ function initMusicControls() {
 
   audio.addEventListener("play", () => {
     playing = true;
-    sync();
+    updatePlayButton();
   });
 
   audio.addEventListener("pause", () => {
     playing = false;
-    sync();
+    updatePlayButton();
   });
 
   muteBtn.addEventListener("click", (e) => {
@@ -268,13 +275,6 @@ function initMusicControls() {
     muteBtn.setAttribute("aria-pressed", String(muted));
     audio.muted = muted;
   });
-
-  function sync() {
-    playBtn.textContent = playing ? "⏸" : "▶";
-  }
-
-  // Store reference for sync
-  window.__mp = { playBtn, audio, muteBtn, muteIcon, sync };
 }
 
 /* ---------- sections ------------------------------------------------------- */
