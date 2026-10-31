@@ -49,12 +49,24 @@ jynxtweb-xp/
 
 ## Features
 
-- **Windows XP Desktop**: Authentic desktop environment with wallpaper
-- **Music Player**: HTML5 audio player with shuffle and playlist
+- **Windows XP Welcome Screen**: Authentic login experience with Bliss wallpaper background, Windows XP logo, and Luna theme styling
+- **Windows XP Desktop**: Authentic desktop environment with Luna blue taskbar, green START button, and proper desktop icons
+- **Full Window Management**: XP-style windows with 3D borders, titlebars, and minimize/maximize/close buttons
+- **Music Player**: HTML5 audio player with Windows Media Player-style island UI
 - **Lyric Annotations**: Genius-style annotated song lyrics with timing sync
 - **Last.fm Integration**: Currently playing track from your Last.fm account
 - **NGL.link Inbox**: Anonymous message collection
 - **Admin Dashboard**: Configuration editing with live preview
+
+## Visual Authenticity
+
+This site implements Windows XP Luna theme visual authenticity:
+
+- **Colors**: XP Luna palette (#0078d7 blue, #008000 green START button)
+- **Borders**: 3D-style borders with white top/left highlights and blue bottom/right shadows
+- **Typography**: Segoe UI system font matching Windows XP
+- **Buttons**: XP-style push buttons with proper down-state effects
+- **Login Screen**: Authentic Windows XP Welcome Screen composition
 
 ## Configuration
 
