@@ -79,18 +79,19 @@ img {
 }
 
 /* ==========================================================================
-   LOGIN SCREEN
+   LOGIN SCREEN - Windows XP Welcome Screen
    ========================================================================== */
+
+/* Bliss wallpaper as login background */
 #login-screen {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #001a33 0%, #003366 50%, #001a33 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   opacity: 1;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.3s ease;
 }
 
 #login-screen.hidden {
@@ -99,57 +100,130 @@ img {
   z-index: -1;
 }
 
-#login-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 40px;
-  text-align: center;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  max-width: 320px;
-}
-
-#login-avatar {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  border: 3px solid var(--accent);
+/* Bliss wallpaper as background */
+#login-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  margin: 0 auto 20px;
+  z-index: -1;
 }
 
+/* Windows XP Logo - positioned at top center */
+#xp-logo {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1001;
+}
+
+#xp-logo img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+/* Windows XP branding at bottom */
+#xp-branding {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffffff;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  font-size: 12px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+}
+
+/* Windows XP Login Dialog - Classic XP styling */
+#login-card {
+  background: #f0f0f0;
+  border: 2px solid #000080;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  position: relative;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+  min-width: 280px;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+}
+
+/* XP-style avatar - circular with XP-style border */
+#login-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 3px solid #000080;
+  border-bottom: 4px solid #808080;
+  border-right: 4px solid #808080;
+  object-fit: cover;
+  margin: 0 auto 12px;
+  display: block;
+}
+
+/* User info container */
+#user-info {
+  margin-bottom: 16px;
+}
+
+/* XP-style title - uses system font */
 #login-title {
-  font-size: 28px;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  font-size: 18px;
   font-weight: bold;
-  margin: 0 0 16px;
-  color: var(--accent);
+  margin: 0 0 8px;
+  color: #000000;
 }
 
+#login-title::selection {
+  background: transparent;
+}
+
+/* XP-style subtitle */
 #login-subtitle {
-  color: #aaa;
-  margin-bottom: 24px;
-  font-size: 14px;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  color: #333333;
+  margin: 0 0 20px;
+  font-size: 12px;
 }
 
+/* XP-style button - Classic look */
 #login-btn {
-  background: linear-gradient(135deg, #0078d7 0%, #005a9e 100%);
-  border: none;
-  color: white;
-  padding: 12px 32px;
-  border-radius: 8px;
-  font-size: 16px;
+  background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%);
+  border: 2px solid #000000;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #808080;
+  border-bottom: 2px solid #808080;
+  border-radius: 0;
+  padding: 6px 24px;
+  font-size: 14px;
   cursor: pointer;
-  transition: transform 0.1s, box-shadow 0.1s;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  font-weight: bold;
+  color: #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+  transition: none;
 }
 
+/* XP-style button hover */
 #login-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0, 120, 215, 0.3);
+  background: linear-gradient(180deg, #d0d0d0 0%, #b0b0b0 100%);
 }
 
+/* XP-style button active (pressed) */
 #login-btn:active {
-  transform: translateY(0);
+  background: linear-gradient(180deg, #a0a0a0 0%, #c0c0c0 100%);
+  border-top-color: #808080;
+  border-left-color: #808080;
+  border-right-color: #ffffff;
+  border-bottom-color: #ffffff;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+  transform: none;
 }
 
 /* ==========================================================================
@@ -188,31 +262,55 @@ img {
   position: fixed;
   inset: 0;
   background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.5) 100%);
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+body.entered #vignette {
+  opacity: 1;
 }
 
 #mute-btn {
   position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 10;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  width: 40px;
-  height: 40px;
+  top: 8px;
+  right: 8px;
+  z-index: 55;
+  background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%);
+  border: 2px solid #000000;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #808080;
+  border-bottom: 2px solid #808080;
+  border-radius: 0;
+  width: 24px;
+  height: 24px;
   padding: 0;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  font-size: 12px;
 }
 
 #mute-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: var(--accent);
+  background: linear-gradient(180deg, #d0d0d0 0%, #b0b0b0 100%);
+}
+
+#mute-btn:active {
+  background: linear-gradient(180deg, #a0a0a0 0%, #c0c0c0 100%);
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+body.entered #mute-btn {
+  display: flex;
+}
+
+#mute-btn:not(.entered) {
+  display: none;
 }
 
 #mute-icon {
@@ -288,32 +386,38 @@ img {
 }
 
 .desktop-icon-content {
-  width: 64px;
-  height: 64px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 48px;
+  height: 48px;
+  border: 2px solid #000080;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #000080;
+  border-bottom: 2px solid #000080;
+  border-radius: 0;
+  background: #f0f0f0;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
   margin-bottom: 8px;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 .desktop-icon-content:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: var(--accent);
+  background: #e0e0e0;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
 }
 
 .desktop-icon-content img {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
 }
 
 .desktop-icon-label {
-  font-size: 12px;
-  color: #ccc;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  font-size: 11px;
+  color: #000000;
   text-align: center;
   max-width: 64px;
   overflow: hidden;
@@ -442,101 +546,108 @@ img {
 }
 
 /* ==========================================================================
-   MUSIC PLAYER (ISLAND)
+   MUSIC PLAYER (ISLAND) - Windows Media Player Style
    ========================================================================== */
 #island {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 10;
-  background: rgba(255, 255, 255, var(--overlay));
-  backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--card-radius);
-  padding: 16px;
+  bottom: 8px;
+  right: 8px;
+  z-index: 55;
+  background: linear-gradient(180deg, #003366 0%, #001a33 100%);
+  border: 2px solid #000080;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #000080;
+  border-bottom: 2px solid #000080;
+  border-radius: 0;
+  padding: 10px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-width: 200px;
-  min-height: 60px;
-  transition: all 0.3s ease;
-  cursor: grab;
-}
-
-#island[data-no-drag] {
+  gap: 8px;
+  min-width: 160px;
+  min-height: 44px;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
   cursor: default;
-}
-
-#island.dragging {
-  cursor: grabbing;
-  transform: scale(1.02);
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
 }
 
 .music-cover-tile {
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  background: #333;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ffffff;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  border-radius: 4px;
+  background: #0078d7;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  color: #6cf;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: bold;
 }
 
 .island-meta {
   display: flex;
   flex-direction: column;
-  min-width: 100px;
+  min-width: 80px;
   overflow: hidden;
 }
 
 #track-title {
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: bold;
+  font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #ffffff;
 }
 
 #track-artist {
-  font-size: 12px;
-  color: #aaa;
+  font-size: 10px;
+  color: #cccccc;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-#track-next {
-  font-size: 12px;
-  color: #666;
 }
 
 .island-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
 }
 
 .island-controls button {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  border: none;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
+  background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%);
+  border: 1px solid #000000;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #808080;
+  border-bottom: 1px solid #808080;
+  color: #000000;
+  border-radius: 0;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
-  font-size: 16px;
-  transition: all 0.2s;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  font-weight: bold;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+  transition: none;
 }
 
 .island-controls button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(180deg, #d0d0d0 0%, #b0b0b0 100%);
 }
 
 .island-controls button:active {
-  transform: scale(0.95);
+  background: linear-gradient(180deg, #a0a0a0 0%, #c0c0c0 100%);
+  box-shadow: 0.5px 0.5px 0 rgba(0, 0, 0, 0.3);
 }
 
 /* ==========================================================================
@@ -776,10 +887,14 @@ img {
    ========================================================================== */
 .window {
   position: fixed;
-  background: var(--window-bg, rgba(10, 10, 15, 0.95));
-  border: 1px solid var(--window-border, rgba(255, 255, 255, 0.15));
+  background: #f0f0f0;
+  border: 2px solid #000080;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #000080;
+  border-bottom: 2px solid #000080;
   border-radius: 0;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
   min-width: 300px;
   min-height: 200px;
   z-index: 100;
@@ -788,23 +903,24 @@ img {
 }
 
 .window-titlebar {
-  background: linear-gradient(90deg, #0078d7 0%, #005a9e 100%);
+  background: linear-gradient(90deg, #0078d7 0%, #005aa1 100%);
   color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 2px 8px;
-  height: 28px;
+  height: 22px;
   user-select: none;
   cursor: default;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid #000000;
 }
 
 .window-title {
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
   font-size: 13px;
   font-weight: 500;
   margin: 0;
-  color: #fff;
+  color: #ffffff;
 }
 
 .window-controls {
@@ -813,11 +929,11 @@ img {
 }
 
 .win-btn {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   background: transparent;
   border: none;
-  color: #fff;
+  color: #ffffff;
   font-size: 12px;
   cursor: pointer;
   display: flex;
@@ -825,7 +941,9 @@ img {
   justify-content: center;
   border-radius: 0;
   padding: 0;
-  transition: background 0.1s;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  font-weight: bold;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
 }
 
 .win-btn:hover {
@@ -833,21 +951,21 @@ img {
 }
 
 .win-btn:active {
-  transform: scale(0.9);
+  box-shadow: 0.5px 0.5px 0 rgba(0, 0, 0, 0.3);
 }
 
 .window-content {
   padding: 12px;
   overflow: auto;
   flex: 1;
-  background: var(--window-bg, rgba(10, 10, 15, 0.95));
+  background: #f0f0f0;
 }
 
 .window.maximized {
   left: 0 !important;
   top: 0 !important;
   width: 100vw !important;
-  height: calc(100vh - 48px) !important;
+  height: calc(100vh - 36px) !important;
   border-radius: 0;
 }
 
@@ -909,18 +1027,36 @@ img {
 }
 
 #taskbar-start-button {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
+  background: linear-gradient(180deg, #008000 0%, #006600 100%);
+  border: 2px solid #000000;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #004000;
+  border-bottom: 2px solid #004000;
+  border-radius: 0;
   padding: 4px 12px;
   cursor: pointer;
   margin-right: 8px;
   min-width: 80px;
   text-align: center;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  font-weight: bold;
+  color: #ffffff;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 #taskbar-start-button:hover {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+  background: linear-gradient(180deg, #009000 0%, #007700 100%);
+}
+
+#taskbar-start-button:active {
+  background: linear-gradient(180deg, #007700 0%, #008000 100%);
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  border-right-color: #004000;
+  border-bottom-color: #004000;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+  transform: none;
 }
 
 #taskbar-taskbar {
@@ -946,13 +1082,17 @@ img {
 /* Start Menu */
 .start-menu {
   position: fixed;
-  bottom: 36px;
-  left: 24px;
+  bottom: 0;
+  left: 0;
   width: 240px;
-  background: var(--window-bg, rgba(10, 10, 15, 0.95));
-  border: 1px solid var(--window-border, rgba(255, 255, 255, 0.15));
-  border-radius: 4px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  background: #f0f0f0;
+  border: 2px solid #000080;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #000080;
+  border-bottom: 2px solid #000080;
+  border-radius: 0;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
   z-index: 1000;
   display: none;
   overflow: hidden;
@@ -967,23 +1107,25 @@ img {
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--window-border, rgba(255, 255, 255, 0.15));
+  border-bottom: 1px solid #808080;
 }
 
 .start-menu-user img {
-  width: 48px;
-  height: 48px;
+  width: 32px;
+  height: 32px;
   border-radius: 4px;
-  border: 1px solid var(--accent);
+  border: 2px solid #000080;
 }
 
 .start-menu-user span {
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
   font-weight: bold;
+  color: #000000;
 }
 
 .start-menu-separator {
   height: 1px;
-  background: var(--window-border, rgba(255, 255, 255, 0.15));
+  background: #808080;
   margin: 8px 0;
 }
 
@@ -991,11 +1133,14 @@ img {
   padding: 10px 16px;
   cursor: pointer;
   transition: background 0.15s;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
   font-size: 14px;
+  color: #000000;
 }
 
 .start-menu-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: #0078d7;
+  color: #ffffff;
 }
 
 /* Admin Interface */

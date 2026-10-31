@@ -45,12 +45,12 @@
     }
   ],
   "wallpapers": [
-    "/assets/optimized/wallpapers/default.webp",
-    "/assets/optimized/wallpapers/wallpaper1.webp",
-    "/assets/optimized/wallpapers/wallpaper2.webp",
-    "/assets/optimized/wallpapers/wallpaper3.webp",
-    "/assets/optimized/wallpapers/wallpaper4.webp",
-    "/assets/optimized/wallpapers/wallpaper5.webp"
+    "/assets/optimized/wallpapers/Bliss.webp",
+    "/assets/optimized/wallpapers/Windows XP.webp",
+    "/assets/optimized/wallpapers/Ascent.webp",
+    "/assets/optimized/wallpapers/Azul.webp",
+    "/assets/optimized/wallpapers/Crystal.webp",
+    "/assets/optimized/wallpapers/Friend.webp"
   ],
   "inbox": {
     "enabled": true,

@@ -10,57 +10,66 @@
   </head>
 
   <body>
-    <!-- Intro Screen -->
-    <div id="intro">
-      <div class="intro-label" id="intro-label">click to enter</div>
+    <!-- Wallpaper Background -->
+    <div id="wallpapers" aria-hidden="true">
+      <img src="/assets/optimized/wallpapers/Bliss.webp" alt="Bliss Wallpaper" class="login-bg">
     </div>
 
-    <!-- Login Screen -->
+    <!-- Login Screen - Windows XP Welcome Screen -->
     <div id="login-screen">
-      <div id="login-card" class="glass-card">
+      <!-- Windows XP Logo -->
+      <div id="xp-logo">
+        <img src="/assets/optimized/icons/windows-xp.webp" alt="Windows XP" />
+      </div>
+
+      <!-- User Account Panel -->
+      <div id="login-card">
         <img id="login-avatar" src="/assets/optimized/avatars/profile1.webp" alt="jynxt" />
-        <h1 id="login-title">jynxt</h1>
-        <p id="login-subtitle">double-tap to enter</p>
-        <button id="login-btn" class="win-button">enter</button>
+        <div id="user-info">
+          <h1 id="login-title">jynxt</h1>
+          <p id="login-subtitle">welcome</p>
+        </div>
+        <button id="login-btn">enter</button>
+      </div>
+
+      <!-- Windows XP branding -->
+      <div id="xp-branding">
+        <span>Windows XP</span>
       </div>
     </div>
 
     <!-- Vignette Overlay -->
     <div id="vignette"></div>
 
-    <!-- Wallpaper Background -->
-    <div id="wallpapers" aria-hidden="true"></div>
-
     <!-- Mute Button -->
     <button id="mute-btn" type="button" data-no-reveal aria-label="Mute" class="win-button small">
-      <img id="mute-icon" src="/assets/volume on.png" alt="" draggable="false" />
+      <img id="mute-icon" src="/assets/optimized/icons/volume-on.webp" alt="" draggable="false" />
     </button>
 
     <!-- Desktop Environment -->
     <div id="desktop">
-      <!-- Desktop Icons -->
       <div id="desktop-icons">
         <div class="desktop-icon" data-app="profile">
           <div class="desktop-icon-content">
-            <img src="/assets/optimized/avatars/profile1.webp" alt="Profile" />
+            <img src="/assets/optimized/icons/profile-icon.webp" alt="Profile" />
           </div>
           <div class="desktop-icon-label">jynxt</div>
         </div>
         <div class="desktop-icon" data-app="gallery">
           <div class="desktop-icon-content">
-            <img src="/assets/optimized/wallpapers/default.webp" alt="Gallery" />
+            <img src="/assets/optimized/wallpapers/Bliss.webp" alt="Gallery" />
           </div>
           <div class="desktop-icon-label">gallery</div>
         </div>
         <div class="desktop-icon" data-app="music">
           <div class="desktop-icon-content">
-            <img src="/assets/optimized/wallpapers/wallpaper1.webp" alt="Music" />
+            <img src="/assets/optimized/icons/music-player.webp" alt="Music" />
           </div>
           <div class="desktop-icon-label">music</div>
         </div>
         <div class="desktop-icon" data-app="wallpaper">
           <div class="desktop-icon-content">
-            <img src="/assets/optimized/wallpapers/wallpaper2.webp" alt="Wallpaper" />
+            <img src="/assets/optimized/icons/wallpaper.webp" alt="Wallpaper" />
           </div>
           <div class="desktop-icon-label">wallpaper</div>
         </div>

@@ -6,6 +6,7 @@
     ],
     "deny": [
       "Edit(//home/jynxt/Documents/github stuff/myownwebsite-stardance/reference/**)"
-    ]
+    ],
+    "blockReadsOutsideWorkingDirectories": false
   }
 }

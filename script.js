@@ -234,12 +234,18 @@ function handleWindowButton(win, action) {
 /* ---------- Login -------------------------------------------------------- */
 
 function initLogin() {
-  $("#login-screen").addEventListener("click", () => {
-    $("#login-screen").classList.add("hidden");
-    $("intro").classList.add("is-hidden");
-    document.body.classList.add("entered");
-    activateProfileSection();
-    updateSections();
+  const loginScreen = $("#login-screen");
+
+  // Login screen click handler
+  loginScreen.addEventListener("click", (e) => {
+    // Only respond to clicks on the login card, not the background
+    if (e.target === loginScreen || loginScreen.contains(e.target)) {
+      e.preventDefault();
+      loginScreen.classList.add("hidden");
+      document.body.classList.add("entered");
+      activateProfileSection();
+      updateSections();
+    }
   });
 }
 
@@ -474,7 +480,7 @@ function initMusicControls() {
   $("mute-btn").addEventListener("click", (e) => {
     e.stopPropagation();
     muted = !muted;
-    $("mute-icon").src = muted ? "/assets/volume off.png" : "/assets/volume on.png";
+    $("mute-icon").src = muted ? "/assets/optimized/icons/volume-off.webp" : "/assets/optimized/icons/volume-on.webp";
     $("mute-btn").setAttribute("aria-label", muted ? "Unmute" : "Mute");
     $("audio").muted = muted;
   });
