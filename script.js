@@ -253,16 +253,16 @@ function initLogin() {
 
 function openProfileWindow() {
   const content = `
-    <div class="profile-content">
+    <div class="profile-content" style="font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; color: #000000;">
       <div style="text-align: center; margin-bottom: 16px;">
-        <img src="${config.profile.avatar}" alt="jynxt" style="width: 96px; height: 96px; border-radius: 50%; border: 3px solid #fff;">
-        <h2 style="margin: 8px 0 4px;">${escapeHtml(config.profile.name)}</h2>
-        <p style="color: #aaa; font-size: 14px;">${escapeHtml(config.profile.tagline)}</p>
+        <img src="${config.profile.avatar}" alt="jynxt" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid #000080; border-bottom: 4px solid #808080; border-right: 4px solid #808080; object-fit: cover;">
+        <h2 style="margin: 8px 0 4px; font-size: 18px; font-weight: bold; color: #000000;">${escapeHtml(config.profile.name)}</h2>
+        <p style="color: #666666; font-size: 12px;">${escapeHtml(config.profile.tagline)}</p>
       </div>
       <div id="profile-links">
         ${config.links.map(l => `
-          <a href="${safeHref(l.url)}" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 12px; padding: 8px; background: rgba(255,255,255,0.05); border-radius: 6px; margin-bottom: 8px;">
-            <img src="${safeSrc(l.icon)}" style="width: 20px; height: 20px;">
+          <a href="${safeHref(l.url)}" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: #f0f0f0; border: 1px solid #000080; border-top: 1px solid #ffffff; border-left: 1px solid #ffffff; border-right: 1px solid #000080; border-bottom: 1px solid #000080; border-radius: 0; margin-bottom: 8px; text-decoration: none; color: #000000; font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; font-size: 12px;">
+            <img src="${safeSrc(l.icon)}" style="width: 16px; height: 16px; display: block;">
             <span>${l.title}</span>
           </a>
         `).join("")}
@@ -276,11 +276,12 @@ function openProfileWindow() {
 
 function openGalleryWindow() {
   const content = `
-    <div id="gallery-content" style="overflow-y: auto;">
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
+    <div id="gallery-content" style="overflow-y: auto; font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; color: #000000;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; padding: 12px;">
         ${config.wallpapers.map((wp, i) => `
-          <div data-index="${i}" style="cursor: pointer; border: 2px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden;" class="gallery-item">
-            <img src="${safeSrc(wp)}" style="width: 100%; height: 120px; object-fit: cover;">
+          <div data-index="${i}" style="cursor: pointer; border: 2px solid #000080; border-top: 2px solid #ffffff; border-left: 2px solid #ffffff; border-right: 2px solid #000080; border-bottom: 2px solid #000080; overflow: hidden;" class="gallery-item">
+            <img src="${safeSrc(wp)}" style="width: 100%; height: 90px; object-fit: cover;">
+            <div style="padding: 4px; text-align: center; font-size: 10px; color: #000000;">${i + 1}</div>
           </div>
         `).join("")}
       </div>
@@ -299,13 +300,13 @@ function openGalleryWindow() {
 
 function openMusicWindow() {
   const content = `
-    <div class="music-window-content">
-      <div style="margin-bottom: 12px; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-        <div id="music-current" style="font-weight: bold;">Loading...</div>
-        <div id="music-artist" style="color: #aaa; font-size: 12px;">Now Playing</div>
+    <div class="music-window-content" style="font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; color: #000000; padding: 12px;">
+      <div style="margin-bottom: 12px; padding: 12px; background: #f0f0f0; border: 2px solid #000080; border-top: 2px solid #ffffff; border-left: 2px solid #ffffff; padding: 0;">
+        <div id="music-current" style="font-weight: bold; margin: 0; padding: 8px 12px; color: #000000;">Loading...</div>
+        <div id="music-artist" style="color: #666666; font-size: 12px; margin: 0; padding: 0 12px;">Now Playing</div>
       </div>
       <div style="display: flex; gap: 8px; margin-top: auto;">
-        <button id="wp-mute" class="win-btn">🔊</button>
+        <button id="wp-mute" style="width: 20px; height: 20px;">🔊</button>
       </div>
     </div>
   `;
@@ -327,16 +328,16 @@ function renderTrackToWindow(win) {
 
 function openWallpaperWindow() {
   const content = `
-    <div class="wallpaper-selector">
+    <div class="wallpaper-selector" style="font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; color: #000000; padding: 12px;">
       <div id="wp-list" style="display: flex; gap: 12px; overflow-x: auto; padding: 12px;">
         ${config.wallpapers.map((wp, i) => `
-          <div data-index="${i}" style="min-width: 120px; cursor: pointer; border: 2px solid ${i === wallpaperIdx ? 'var(--accent)' : 'rgba(255,255,255,0.2)'}; border-radius: 8px; overflow: hidden;" class="wp-option">
+          <div data-index="${i}" style="min-width: 120px; cursor: pointer; border: 2px solid ${i === wallpaperIdx ? '#0078d7' : '#000080'}; border-top: 2px solid #ffffff; border-left: 2px solid #ffffff; border-right: 2px solid #000080; border-bottom: 2px solid #000080; overflow: hidden;" class="wp-option">
             <img src="${safeSrc(wp)}" style="width: 100%; height: 80px; object-fit: cover;">
-            <div style="padding: 4px; text-align: center; font-size: 10px;">${i + 1}</div>
+            <div style="padding: 4px; text-align: center; font-size: 10px; color: #000000;">${i + 1}</div>
           </div>
         `).join("")}
       </div>
-      <button id="wp-apply" style="margin-top: 12px; padding: 8px 16px;">Apply</button>
+      <button id="wp-apply" style="margin-top: 12px; padding: 6px 16px; background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%); border: 2px solid #000000; border-top: 2px solid #ffffff; border-left: 2px solid #ffffff; border-right: 2px solid #808080; border-bottom: 2px solid #808080; border-radius: 0; cursor: pointer; font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; font-weight: bold; color: #000000; box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);">Apply</button>
     </div>
   `;
 
@@ -348,9 +349,17 @@ function openWallpaperWindow() {
     el.addEventListener("click", () => {
       selected = parseInt(el.dataset.index);
       win.querySelectorAll(".wp-option").forEach(o => {
-        o.style.borderColor = "rgba(255,255,255,0.2)";
+        o.style.borderColor = "#000080";
+        o.style.borderTopColor = "#ffffff";
+        o.style.borderLeftColor = "#ffffff";
+        o.style.borderRightColor = "#000080";
+        o.style.borderBottomColor = "#000080";
       });
-      el.style.borderColor = "var(--accent)";
+      el.style.borderColor = "#0078d7";
+      el.style.borderTopColor = "#ffffff";
+      el.style.borderLeftColor = "#ffffff";
+      el.style.borderRightColor = "#0078d7";
+      el.style.borderBottomColor = "#0078d7";
     });
   });
 
