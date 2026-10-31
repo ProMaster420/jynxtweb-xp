@@ -2,13 +2,10 @@
   "permissions": {
     "defaultMode": "acceptEdits",
     "allow": [
-      "Bash(*)",
       "Read(//home/jynxt/Documents/github stuff/myownwebsite-stardance/reference/**)"
     ],
     "deny": [
-      "Edit(//home/jynxt/Documents/github stuff/myownwebsite-stardance/reference/**)",
-      "Write(//home/jynxt/Documents/github stuff/myownwebsite-stardance/reference/**)"
+      "Edit(//home/jynxt/Documents/github stuff/myownwebsite-stardance/reference/**)"
     ]
-  },
-  "permissions.blockReadsOutsideWorkingDirectories": false
+  }
 }

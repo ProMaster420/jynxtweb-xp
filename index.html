@@ -4,38 +4,35 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#05060a" />
-    <meta name="robots" content="index, follow" />
+    <meta name="description" content="jynxt - a Windows XP-style personal music website" />
     <title>jynxt</title>
     <link rel="stylesheet" href="/styles.css" />
-    <!-- Vercel Web Analytics -->
-    <script>
-      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/insights/script.js"></script>
   </head>
 
   <body>
+    <!-- Intro Screen -->
+    <div id="intro">
+      <div class="intro-label" id="intro-label">click to enter</div>
+    </div>
+
     <!-- Login Screen -->
     <div id="login-screen">
-      <div id="login-card">
+      <div id="login-card" class="glass-card">
         <img id="login-avatar" src="/assets/optimized/avatars/profile1.webp" alt="jynxt" />
         <h1 id="login-title">jynxt</h1>
-        <p id="login-subtitle">click to enter</p>
-        <button id="login-btn" class="glass-chip">enter</button>
+        <p id="login-subtitle">double-tap to enter</p>
+        <button id="login-btn" class="win-button">enter</button>
       </div>
     </div>
 
     <!-- Vignette Overlay -->
     <div id="vignette"></div>
 
-    <!-- Reveal Image (for spotlight effect) -->
-    <img id="reveal" alt="" aria-hidden="true" hidden />
-
     <!-- Wallpaper Background -->
     <div id="wallpapers" aria-hidden="true"></div>
 
     <!-- Mute Button -->
-    <button id="mute-btn" type="button" data-no-reveal aria-label="Mute" class="glass-chip">
+    <button id="mute-btn" type="button" data-no-reveal aria-label="Mute" class="win-button small">
       <img id="mute-icon" src="/assets/volume on.png" alt="" draggable="false" />
     </button>
 
@@ -49,39 +46,67 @@
           </div>
           <div class="desktop-icon-label">jynxt</div>
         </div>
+        <div class="desktop-icon" data-app="gallery">
+          <div class="desktop-icon-content">
+            <img src="/assets/optimized/wallpapers/default.webp" alt="Gallery" />
+          </div>
+          <div class="desktop-icon-label">gallery</div>
+        </div>
+        <div class="desktop-icon" data-app="music">
+          <div class="desktop-icon-content">
+            <img src="/assets/optimized/wallpapers/wallpaper1.webp" alt="Music" />
+          </div>
+          <div class="desktop-icon-label">music</div>
+        </div>
+        <div class="desktop-icon" data-app="wallpaper">
+          <div class="desktop-icon-content">
+            <img src="/assets/optimized/wallpapers/wallpaper2.webp" alt="Wallpaper" />
+          </div>
+          <div class="desktop-icon-label">wallpaper</div>
+        </div>
       </div>
     </div>
 
-    <!-- Content Area (Profile Card, etc.) -->
+    <!-- Content Windows -->
     <div id="content">
-      <div id="cards-container">
-        <!-- Profile Card -->
-        <main id="profile-card" class="liquid-glass profile-card card-section" data-no-reveal>
-          <div class="avatar-ring">
-            <img id="avatar" src="/assets/optimized/avatars/profile1.webp" alt="" draggable="false" />
-          </div>
-          <h1 id="profile-name">jynxt</h1>
-          <p class="tagline" id="profile-tagline"></p>
-          <a id="now-playing" class="now-playing" target="_blank" rel="noopener noreferrer" hidden></a>
-          <section id="links" aria-label="Links"></section>
-        </main>
+      <div id="windows-container"></div>
+    </div>
 
-        <!-- About Card -->
-        <section id="about-card" class="liquid-glass about-card card-section" data-no-reveal>
-          <button id="annot-open" class="glass-chip" type="button" aria-haspopup="dialog">look closer</button>
-        </section>
+    <!-- Taskbar -->
+    <div id="taskbar" data-no-reveal>
+      <div id="taskbar-start-button">
+        <span id="start-btn">START</span>
+      </div>
+      <div id="taskbar-taskbar">
+        <div class="taskbar-spacer"></div>
+        <div id="taskbar-clock">00:00 AM</div>
+      </div>
+    </div>
+
+    <!-- Start Menu -->
+    <div id="start-menu" class="start-menu">
+      <div class="start-menu-content">
+        <div class="start-menu-user">
+          <img src="/assets/optimized/avatars/profile1.webp" alt="" />
+          <span>jynxt</span>
+        </div>
+        <div class="start-menu-separator"></div>
+        <div class="start-menu-item" data-action="profile">Profile</div>
+        <div class="start-menu-item" data-action="gallery">Gallery</div>
+        <div class="start-menu-item" data-action="music">Music Player</div>
+        <div class="start-menu-item" data-action="wallpaper">Wallpaper</div>
       </div>
     </div>
 
     <!-- Music Player Island -->
-    <div id="island" class="music-island liquid-glass" data-no-reveal aria-label="Music player">
+    <div id="island" class="music-island glass-card" data-no-reveal>
       <audio id="audio" preload="none" playsinline></audio>
       <div id="cover" class="music-cover-tile">♪</div>
       <div class="island-meta">
         <div id="track-title" class="track-title"></div>
         <div id="track-artist" class="track-artist"></div>
       </div>
-      <div class="island-controls" data-no-drag>
+      <div class="island-controls">
         <button type="button" id="prev-btn" aria-label="Previous">⏮</button>
         <button type="button" id="play-btn" aria-label="Play">▶</button>
         <button type="button" id="next-btn" aria-label="Next">⏭</button>
@@ -89,7 +114,7 @@
     </div>
 
     <!-- Annotation Overlay -->
-    <div id="annotation-overlay" class="annotation-overlay" style="display: none;">
+    <div id="annotation-overlay" class="annotation-overlay">
       <div id="annotation-container">
         <div id="annotation-content">
           <div class="annotation-header">
@@ -97,8 +122,8 @@
             <span id="annotation-artist"></span>
             <button id="annotation-close" aria-label="Close">✕</button>
           </div>
-          <div id="annotation-cover"></div>
-          <div id="annotation-lyrics"></div>
+          <div id="annotation-cover" class="annotation-cover"></div>
+          <div id="annotation-lyrics" class="annotation-lyrics"></div>
           <div class="annotation-text" id="annotation-text"></div>
           <div class="annotation-action">
             <a id="annotation-full-link" target="_blank" rel="noopener noreferrer"></a>
@@ -106,11 +131,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Annotation Gallery/List -->
-    <div id="annotation-gallery" style="display: none;">
-      <div id="annotation-list"></div>
     </div>
 
     <!-- Main Scripts -->
