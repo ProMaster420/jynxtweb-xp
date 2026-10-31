@@ -313,6 +313,11 @@ async function boot() {
   initLogin();
   initMusicControls();
 
+  // Initialize annotations if enabled
+  if (config.annotations?.enabled) {
+    window.initAnnotations?.();
+  }
+
   if (PREVIEW) {
     // Admin live preview mode
     introDone = true;
