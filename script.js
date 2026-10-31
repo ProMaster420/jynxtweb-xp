@@ -235,18 +235,28 @@ function handleWindowButton(win, action) {
 
 function initLogin() {
   const loginScreen = $("#login-screen");
+  const loginCard = $("#login-card");
+  const loginBtn = $("#login-btn");
 
-  // Login screen click handler
-  loginScreen.addEventListener("click", (e) => {
-    // Only respond to clicks on the login card, not the background
-    if (e.target === loginScreen || loginScreen.contains(e.target)) {
-      e.preventDefault();
-      loginScreen.classList.add("hidden");
-      document.body.classList.add("entered");
-      activateProfileSection();
-      updateSections();
-    }
+  // Login button click handler - primary interaction
+  loginBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    transitionToDesktop();
   });
+
+  // Also allow clicking anywhere on the login card (but not the XP logo area)
+  loginCard.addEventListener("click", (e) => {
+    // Don't respond if clicking the XP logo
+    if (e.target.closest("#xp-logo")) return;
+    transitionToDesktop();
+  });
+}
+
+function transitionToDesktop() {
+  $("#login-screen").classList.add("hidden");
+  document.body.classList.add("entered");
+  activateProfileSection();
+  updateSections();
 }
 
 /* ---------- Profile Window ----------------------------------------------- */
