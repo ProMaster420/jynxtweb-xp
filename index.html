@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#05060a" />
+    <meta name="robots" content="index, follow" />
+    <title>jynxt</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <!-- Vercel Web Analytics -->
+    <script>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+  </head>
+
+  <body>
+    <!-- Login Screen -->
+    <div id="login-screen">
+      <div id="login-card">
+        <img id="login-avatar" src="/assets/optimized/avatars/profile1.webp" alt="jynxt" />
+        <h1 id="login-title">jynxt</h1>
+        <p id="login-subtitle">click to enter</p>
+        <button id="login-btn" class="glass-chip">enter</button>
+      </div>
+    </div>
+
+    <!-- Vignette Overlay -->
+    <div id="vignette"></div>
+
+    <!-- Reveal Image (for spotlight effect) -->
+    <img id="reveal" alt="" aria-hidden="true" hidden />
+
+    <!-- Wallpaper Background -->
+    <div id="wallpapers" aria-hidden="true"></div>
+
+    <!-- Mute Button -->
+    <button id="mute-btn" type="button" data-no-reveal aria-label="Mute" class="glass-chip">
+      <img id="mute-icon" src="/assets/volume on.png" alt="" draggable="false" />
+    </button>
+
+    <!-- Desktop Environment -->
+    <div id="desktop">
+      <!-- Desktop Icons -->
+      <div id="desktop-icons">
+        <div class="desktop-icon" data-app="profile">
+          <div class="desktop-icon-content">
+            <img src="/assets/optimized/avatars/profile1.webp" alt="Profile" />
+          </div>
+          <div class="desktop-icon-label">jynxt</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Area (Profile Card, etc.) -->
+    <div id="content">
+      <div id="cards-container">
+        <!-- Profile Card -->
+        <main id="profile-card" class="liquid-glass profile-card card-section" data-no-reveal>
+          <div class="avatar-ring">
+            <img id="avatar" src="/assets/optimized/avatars/profile1.webp" alt="" draggable="false" />
+          </div>
+          <h1 id="profile-name">jynxt</h1>
+          <p class="tagline" id="profile-tagline"></p>
+          <a id="now-playing" class="now-playing" target="_blank" rel="noopener noreferrer" hidden></a>
+          <section id="links" aria-label="Links"></section>
+        </main>
+
+        <!-- About Card -->
+        <section id="about-card" class="liquid-glass about-card card-section" data-no-reveal>
+          <button id="annot-open" class="glass-chip" type="button" aria-haspopup="dialog">look closer</button>
+        </section>
+      </div>
+    </div>
+
+    <!-- Music Player Island -->
+    <div id="island" class="music-island liquid-glass" data-no-reveal aria-label="Music player">
+      <audio id="audio" preload="none" playsinline></audio>
+      <div id="cover" class="music-cover-tile">♪</div>
+      <div class="island-meta">
+        <div id="track-title" class="track-title"></div>
+        <div id="track-artist" class="track-artist"></div>
+      </div>
+      <div class="island-controls" data-no-drag>
+        <button type="button" id="prev-btn" aria-label="Previous">⏮</button>
+        <button type="button" id="play-btn" aria-label="Play">▶</button>
+        <button type="button" id="next-btn" aria-label="Next">⏭</button>
+      </div>
+    </div>
+
+    <!-- Annotation Overlay -->
+    <div id="annotation-overlay" class="annotation-overlay">
+      <div id="annotation-container">
+        <div id="annotation-content">
+          <div class="annotation-header">
+            <h2 id="annotation-title"></h2>
+            <span id="annotation-artist"></span>
+            <button id="annotation-close" aria-label="Close">✕</button>
+          </div>
+          <img id="annotation-cover" alt="" />
+          <div id="annotation-lyrics"></div>
+          <div class="annotation-text" id="annotation-text"></div>
+          <div class="annotation-action">
+            <a id="annotation-full-link" target="_blank" rel="noopener noreferrer"></a>
+            <a id="annotation-genius-link" target="_blank" rel="noopener noreferrer"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Scripts -->
+    <script src="/fonts.js" type="module"></script>
+    <script src="/script.js" type="module"></script>
+  </body>
+</html>

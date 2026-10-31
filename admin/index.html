@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>jynxt admin • site panel</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='13' font-size='14'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="/admin/admin.css?v=1" />
+  </head>
+
+  <body>
+    <!-- Lock Screen -->
+    <div id="lock" class="lock">
+      <form id="lock-form" class="lock-card" autocomplete="on" novalidate>
+        <h1>site panel</h1>
+        <p class="muted small">Enter the password to continue.</p>
+        <label class="field">
+          <span class="label">Password</span>
+          <input id="lock-password" type="password" name="password" autocomplete="current-password" autofocus required />
+        </label>
+        <label class="check small"><input id="lock-remember" type="checkbox" /> Stay unlocked for 7 days</label>
+        <button id="lock-submit" class="btn btn-primary" type="submit">Unlock</button>
+        <p id="lock-error" class="lock-error" role="alert"></p>
+      </form>
+    </div>
+
+    <!-- Admin App -->
+    <div id="app" hidden>
+      <header class="bar">
+        <div class="bar-title">
+          <strong>site panel</strong> <span class="muted small">jynxt</span>
+          <span id="draft-state" class="muted">editing a draft</span>
+        </div>
+        <div class="bar-actions">
+          <button type="button" id="btn-export" class="btn">Export (.zip)</button>
+          <button type="button" id="btn-config" class="btn">Download config.json</button>
+          <button type="button" id="btn-reset" class="btn">Discard draft</button>
+          <button type="button" id="btn-publish" class="btn btn-primary">Publish to site</button>
+        </div>
+      </header>
+
+      <div class="layout">
+        <main class="editor" id="editor" aria-label="Settings"></main>
+
+        <aside class="preview" aria-label="Live preview">
+          <div class="preview-frame">
+            <iframe id="preview" title="Site preview"></iframe>
+          </div>
+          <p class="muted small">Preview: click elements to interact</p>
+        </aside>
+      </div>
+
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </div>
+
+    <script type="module" src="/admin/lock.js?v=1"></script>
+  </body>
+</html>

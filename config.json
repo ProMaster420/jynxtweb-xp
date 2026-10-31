@@ -1,0 +1,270 @@
+{
+  "site": {
+    "title": "jynxt",
+    "description": "i listen to music"
+  },
+  "profile": {
+    "name": "jynxt",
+    "tagline": "wsp",
+    "avatar": "/assets/optimized/avatars/profile1.webp"
+  },
+  "about": {
+    "title": "about me",
+    "text": "close to giving up"
+  },
+  "links": [
+    {
+      "title": "Instagram",
+      "url": "https://www.instagram.com/jynxt__/",
+      "icon": "/assets/optimized/icons/instagram.webp"
+    },
+    {
+      "title": "Spotify",
+      "url": "https://open.spotify.com/user/i0ue71gymkciwhe01azc7yrj4",
+      "icon": "/assets/optimized/icons/spotify.webp"
+    },
+    {
+      "title": "Last.fm",
+      "url": "https://www.last.fm/user/ProMaster420",
+      "icon": "/assets/optimized/icons/lastfm.webp"
+    },
+    {
+      "title": "Genius",
+      "url": "https://genius.com/ProMaster420",
+      "icon": "/assets/optimized/icons/genius.webp"
+    },
+    {
+      "title": "Steam",
+      "url": "https://steamcommunity.com/id/ProMaster420_/",
+      "icon": "/assets/optimized/icons/steam.webp"
+    },
+    {
+      "title": "YouTube",
+      "url": "https://www.youtube.com/@ProMaster420",
+      "icon": "/assets/optimized/icons/youtube.webp"
+    }
+  ],
+  "wallpapers": [
+    "/assets/optimized/wallpapers/default.webp",
+    "/assets/optimized/wallpapers/wallpaper1.webp",
+    "/assets/optimized/wallpapers/wallpaper2.webp",
+    "/assets/optimized/wallpapers/wallpaper3.webp",
+    "/assets/optimized/wallpapers/wallpaper4.webp",
+    "/assets/optimized/wallpapers/wallpaper5.webp"
+  ],
+  "inbox": {
+    "enabled": true,
+    "provider": "ngl",
+    "profileUrl": "https://ngl.link/jynxt__",
+    "linkLabel": "send me a message on ngl",
+    "title": "tell me your thoughts",
+    "subtitle": "anonymous. i can't see who you are.",
+    "placeholder": "send me an anonymous message...",
+    "submitLabel": "send",
+    "maxLength": 500
+  },
+  "lastfm": {
+    "enabled": true,
+    "username": "ProMaster420"
+  },
+  "theme": {
+    "font": "system",
+    "accent": "#ffffff",
+    "overlay": 0.2,
+    "blur": 20,
+    "radius": 32
+  },
+  "music": {
+    "autoplay": false,
+    "shuffle": true
+  },
+  "annotations": {
+    "enabled": true,
+    "buttonLabel": "look closer :)",
+    "title": "jy's world",
+    "hint": "press to begin.",
+    "hintDelay": 3,
+    "annotationLabel": "my annotation",
+    "endText": "that's all of them.",
+    "endAgain": "listen again",
+    "endRestart": "back to the start",
+    "defaultTheme": "dark",
+    "highlight": "#ffe94d",
+    "autoplay": false,
+    "fullLabel": "listen to the full song",
+    "fullSongs": [
+      {
+        "url": "https://www.youtube.com/watch?v=JKCneM3C8R8",
+        "title": "bandaids (Official Audio)",
+        "artist": "keshiVEVO"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=glscfhJyZHo",
+        "title": "Who Knows (Official Lyrics Video)",
+        "artist": "Daniel Caesar"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=8PZmhXJc2-I",
+        "title": "MISS ME (Official Visualizer)",
+        "artist": "keshiVEVO"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=9IVO5Dsz1KI",
+        "title": "FTC (F*** The Club)",
+        "artist": "Joji"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=5MzLUvWKh04",
+        "title": "Preach",
+        "artist": "DC The Don"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=7fYZ108XW44",
+        "title": "SUMMER 2016 (Official Music Video)",
+        "artist": "DC The Don"
+      }
+    ],
+    "entries": [
+      {
+        "id": "entry-mvmjvnvnylk",
+        "title": "bandaids",
+        "artist": "keshi",
+        "cover": "/assets/uploads/annotation-https-images-genius-com-785964fb-mvmjy3ya.webp",
+        "audio": "annotations-audio/bandaids.mp3",
+        "startTime": 139,
+        "endTime": 180,
+        "before": "",
+        "lyrics": "Friends of flowers\nFragile silence\nStand beside you\nStop your cryin'",
+        "after": "",
+        "annotation": "The quiet helplessness of watching someone you care about struggle, wishing you could offer them something more than comfort. Like flowers standing beside someone in silence, sometimes the only thing you can give is your presence, even when you don't have the right words to make their pain disappear.",
+        "geniusUrl": "https://genius.com/42028603"
+      },
+      {
+        "id": "entry-mvmkiksasg8",
+        "title": "Who Knows",
+        "artist": "Daniel Caesar",
+        "cover": "/assets/uploads/annotation-https-images-genius-com-b24ce29c-mvmkljkp.webp",
+        "audio": "annotations-audio/Who Knows.mp3",
+        "startTime": 103,
+        "endTime": 111,
+        "before": "",
+        "lyrics": "Will you be there with me by my side, my girl, my shooter?",
+        "after": "",
+        "annotation": "Calling her both my girl and my shooter layers intimacy and protection she's both a romantic partner and someone who'd ride or die for him.",
+        "geniusUrl": "https://genius.com/37349581"
+      },
+      {
+        "id": "entry-mvnu567pngt",
+        "title": "SUMMER 2016",
+        "artist": "DC The Don",
+        "cover": "/assets/uploads/annotation-artworks-ULzAGQNqCl0i5fyd-zNITig-t500x500.webp",
+        "audio": "annotations-audio/DC_The_Don_-_SUMMER_2016_KLICKAUD.mp3",
+        "startTime": 152,
+        "endTime": 185,
+        "before": "",
+        "lyrics": "[Bridge]\nIt's one thing I'm worried 'bout, will you still remember me? (Remember me)\nUp late, two more hours, when we both lonely (Remember me)",
+        "after": "",
+        "annotation": "These lines speaks the fear of being forgotten by someone who once meant so much to you.",
+        "geniusUrl": "https://genius.com/42072939"
+      },
+      {
+        "id": "entry-mvmjyw9i8u0",
+        "title": "MISS ME",
+        "artist": "keshi",
+        "cover": "/assets/uploads/annotation-https-images-genius-com-2a15e86b-mvmk3zo7.webp",
+        "audio": "annotations-audio/MISS_ME_KLICKAUD.mp3",
+        "startTime": 32,
+        "endTime": 68,
+        "before": "",
+        "lyrics": "Oh, baby, say you miss me\nCry yourself to sleep because you miss me",
+        "after": "",
+        "annotation": "Reflect one's desire to know whether what they had meant as much to the other person as it did to them.",
+        "geniusUrl": "https://genius.com/41996196"
+      },
+      {
+        "id": "entry-mvmkdwvnu6k",
+        "title": "MISS ME",
+        "artist": "keshi",
+        "cover": "/assets/uploads/annotation-https-images-genius-com-2a15e86b-mvmk3zo7.webp",
+        "audio": "annotations-audio/MISS_ME_KLICKAUD.mp3",
+        "startTime": 157,
+        "endTime": 167,
+        "before": "",
+        "lyrics": "Just say you miss me\nHold me like you used to when you kissed me",
+        "after": "",
+        "annotation": "Reflecting on a love that no longer feels the same, these lines reveal a longing for both reassurance and intimacy.",
+        "geniusUrl": "https://genius.com/42057826"
+      },
+      {
+        "id": "entry-mvmmw7awmme",
+        "title": "MISS ME",
+        "artist": "keshi",
+        "cover": "/assets/uploads/annotation-https-images-genius-com-2a15e86b-mvmk3zo7.webp",
+        "audio": "annotations-audio/MISS_ME_KLICKAUD.mp3",
+        "startTime": 167,
+        "endTime": 0,
+        "before": "",
+        "lyrics": "You're the only thing I need to fix me\nI try to let you go but it still kills me\nDon't you miss me too?",
+        "after": "",
+        "annotation": "Speaks the feeling of seeing someone as the person who could make everything feel right again, especially when their absence leaves behind a void.",
+        "geniusUrl": "https://genius.com/42027870"
+      },
+      {
+        "id": "entry-mvmkmr7sbx7",
+        "title": "FTC (F*** The Club)",
+        "artist": "Joji",
+        "cover": "/assets/uploads/annotation-https-images-genius-com-f4c0a706-mvmkotlj.webp",
+        "audio": "annotations-audio/FTC.mp3",
+        "startTime": 62,
+        "endTime": 74,
+        "before": "",
+        "lyrics": "I'd rather be next to you\nStrangers in the lights\nDancing in the night",
+        "after": "",
+        "annotation": "Joji contrasts the presence of someone he cares about with the anonymity of club culture.",
+        "geniusUrl": "https://genius.com/40092741"
+      },
+      {
+        "id": "entry-mvmkrddtr0e",
+        "title": "FTC (F*** The Club)",
+        "artist": "Joji",
+        "cover": "/assets/uploads/annotation-https-images-genius-com-f4c0a706-mvmkotlj.webp",
+        "audio": "annotations-audio/FTC.mp3",
+        "startTime": 74,
+        "endTime": 0,
+        "before": "",
+        "lyrics": "I'd rather be next to you\nNo more living lies\nYou'll be here for life (You'll be here for, ah)",
+        "after": "",
+        "annotation": "After rejecting the club atmosphere, Joji shifts his focus entirely toward the person he wants to be with.",
+        "geniusUrl": "https://genius.com/40092778"
+      },
+      {
+        "id": "entry-mvmkv5dmpyk",
+        "title": "PREACH",
+        "artist": "DC The Don",
+        "cover": "/assets/uploads/annotation-artworks-ebfnim1rlvzepsnz-gcqqia-mvmkz2p3.webp",
+        "audio": "annotations-audio/PREACH_KLICKAUD.mp3",
+        "startTime": 181,
+        "endTime": 197,
+        "before": "",
+        "lyrics": "I'm fallin', I'm trippin', I'm stumblin' in your way\nYou walkin', right over, my body and felt no way",
+        "after": "",
+        "annotation": "In this verse, Daji is describing a deep emotional imbalance between themselves and the other person.",
+        "geniusUrl": "https://genius.com/38306374"
+      },
+      {
+        "id": "entry-mvml2c1303k",
+        "title": "PREACH",
+        "artist": "DC The Don",
+        "cover": "/assets/uploads/annotation-artworks-ebfnim1rlvzepsnz-gcqqia-mvmkz2p3.webp",
+        "audio": "annotations-audio/PREACH_KLICKAUD.mp3",
+        "startTime": 197,
+        "endTime": 0,
+        "before": "",
+        "lyrics": "And you soarin', just keep goin', 'cause you floatin' without my weight",
+        "after": "",
+        "annotation": "This line is about letting someone go while blaming yourself.",
+        "geniusUrl": "https://genius.com/38306378"
+      }
+    ]
+  }
+}

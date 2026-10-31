@@ -1,0 +1,865 @@
+/* ==========================================================================
+   jynxt website - Windows XP style desktop environment
+   ========================================================================== */
+
+:root {
+  --accent: #ffffff;
+  --overlay: 0.2;
+  --glass-blur: 28px;
+  --card-radius: 32px;
+  --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --window-bg: rgba(10, 10, 15, 0.9);
+  --window-border: rgba(255, 255, 255, 0.15);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --accent: #ffffff;
+    --overlay: 0.2;
+    --glass-blur: 28px;
+    --card-radius: 32px;
+    --window-bg: rgba(10, 10, 15, 0.9);
+  }
+  :root[data-theme="dark"] {
+    --accent: #ffffff;
+    --overlay: 0.2;
+    --glass-blur: 28px;
+    --card-radius: 32px;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root[data-theme="light"] {
+    --accent: #0078d7;
+    --overlay: 0.9;
+    --glass-blur: 10px;
+    --card-radius: 8px;
+    --window-bg: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  overflow: hidden;
+  background: #05060a;
+  color: #fff;
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+/* Allow text input */
+input,
+textarea,
+select {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+img {
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   LOGIN SCREEN
+   ========================================================================== */
+#login-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #001a33 0%, #003366 50%, #001a33 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+#login-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+#login-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  max-width: 320px;
+}
+
+#login-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  object-fit: cover;
+  margin: 0 auto 20px;
+}
+
+#login-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0 0 16px;
+  color: var(--accent);
+}
+
+#login-subtitle {
+  color: #aaa;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+#login-btn {
+  background: linear-gradient(135deg, #0078d7 0%, #005a9e 100%);
+  border: none;
+  color: white;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+#login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 120, 215, 0.3);
+}
+
+#login-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   DESKTOP
+   ========================================================================== */
+#desktop {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#wallpapers {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+#wallpapers img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+#wallpapers img.active {
+  opacity: 1;
+}
+
+#vignette {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.5) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+#mute-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#mute-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: var(--accent);
+}
+
+#mute-icon {
+  width: 20px;
+  height: 20px;
+  filter: invert(1) brightness(1.5);
+}
+
+#intro {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  pointer-events: none;
+}
+
+#intro.hidden {
+  display: none;
+}
+
+.intro-label {
+  font-size: 24px;
+  color: var(--accent);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+#reveal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+#reveal.visible {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   DESKTOP ICONS
+   ========================================================================== */
+#desktop-icons {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 2;
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: default;
+  user-select: none;
+}
+
+.desktop-icon:active {
+  transform: scale(0.95);
+}
+
+.desktop-icon-content {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  margin-bottom: 8px;
+}
+
+.desktop-icon-content:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: var(--accent);
+}
+
+.desktop-icon-content img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.desktop-icon-label {
+  font-size: 12px;
+  color: #ccc;
+  text-align: center;
+  max-width: 64px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   CONTENT / PROFILE CARD
+   ========================================================================== */
+#content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  pointer-events: none;
+}
+
+.card-section {
+  pointer-events: auto;
+}
+
+.liquid-glass {
+  background: rgba(255, 255, 255, var(--overlay));
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--card-radius);
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.glass-chip {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+}
+
+.glass-chip:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Profile Card */
+#profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 400px;
+}
+
+.avatar-ring {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  padding: 4px;
+  margin-bottom: 16px;
+}
+
+#avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#profile-name {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.tagline {
+  color: #aaa;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.now-playing {
+  display: block;
+  color: #6cf;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.now-playing[hidden] {
+  display: none;
+}
+
+/* Links section */
+#links {
+  margin-top: 24px;
+}
+
+#links a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#links a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#links img {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+}
+
+/* ==========================================================================
+   MUSIC PLAYER (ISLAND)
+   ========================================================================== */
+#island {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10;
+  background: rgba(255, 255, 255, var(--overlay));
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--card-radius);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 200px;
+  min-height: 60px;
+  transition: all 0.3s ease;
+  cursor: grab;
+}
+
+#island[data-no-drag] {
+  cursor: default;
+}
+
+#island.dragging {
+  cursor: grabbing;
+  transform: scale(1.02);
+}
+
+.music-cover-tile {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #6cf;
+}
+
+.island-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  overflow: hidden;
+}
+
+#track-title {
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#track-artist {
+  font-size: 12px;
+  color: #aaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#track-next {
+  font-size: 12px;
+  color: #666;
+}
+
+.island-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.island-controls button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.island-controls button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.island-controls button:active {
+  transform: scale(0.95);
+}
+
+/* ==========================================================================
+   ABOOUT CARD
+   ========================================================================== */
+.about-card {
+  max-width: 400px;
+  text-align: center;
+}
+
+#annot-open {
+  margin-top: 16px;
+}
+
+/* ==========================================================================
+   INBOX CARD
+   ========================================================================== */
+.inbox-card {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#inbox-title {
+  margin: 0;
+  font-size: 18px;
+}
+
+#inbox-subtitle {
+  margin: 0;
+  color: #aaa;
+  font-size: 12px;
+}
+
+.inbox-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inbox-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#inbox-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+#inbox-input:focus {
+  outline: 1px solid var(--accent);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.inbox-count {
+  font-size: 12px;
+  color: #666;
+  text-align: right;
+}
+
+.inbox-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#inbox-send {
+  background: linear-gradient(135deg, #0078d7 0%, #005a9e 100%);
+  border: none;
+  color: white;
+  padding: 8px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+#inbox-send:hover {
+  transform: translateY(-1px);
+}
+
+#inbox-open {
+  color: #6cf;
+  font-size: 12px;
+}
+
+#inbox-status {
+  font-size: 12px;
+  min-height: 1.2em;
+}
+
+/* HP honeypot field - hidden from real users */
+.hp {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   ANOTATION SYSTEM
+   ========================================================================== */
+.annotation-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  z-index: 1000;
+  flex-direction: column;
+}
+
+.annotation-overlay.active {
+  display: flex;
+}
+
+#annotation-container {
+  flex: 1;
+  overflow: auto;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#annotation-content {
+  max-width: 800px;
+  width: 90%;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 16px;
+  padding: 32px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+#annotation-cover {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.annotation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#annotation-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+#annotation-artist {
+  color: #aaa;
+  font-size: 14px;
+}
+
+#annotation-close {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+#annotation-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#annotation-lyrics {
+  font-family: monospace;
+  font-size: 18px;
+  line-height: 1.8;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 24px;
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.highlight {
+  background: rgba(255, 233, 77, 0.3);
+  padding: 4px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.highlight:hover {
+  background: rgba(255, 233, 77, 0.5);
+}
+
+.annotation-text {
+  color: #ccc;
+  line-height: 1.8;
+}
+
+.annotation-action {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+#annotation-full-link {
+  background: linear-gradient(135deg, #0078d7 0%, #005a9e 100%);
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+#annotation-genius-link {
+  color: #6cf;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   ADMIN INTERFACE
+   ========================================================================== */
+#admin-container {
+  display: none;
+}
+
+#admin-container.active {
+  display: block;
+}
+
+/* ==========================================================================
+   UTILITY CLASSES
+   ========================================================================== */
+.hidden {
+  display: none !important;
+}
+
+[data-no-reveal] {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+[data-no-reveal].revealed {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 768px) {
+  #profile-card {
+    max-width: 320px;
+    padding: 16px;
+  }
+
+  #profile-card .liquid-glass {
+    padding: 16px;
+  }
+
+  #island {
+    position: fixed;
+    bottom: 8px;
+    right: 8px;
+    min-width: 160px;
+    padding: 10px;
+  }
+
+  #island .island-meta {
+    min-width: 60px;
+  }
+
+  #track-title {
+    font-size: 12px;
+  }
+
+  #track-artist {
+    font-size: 10px;
+  }
+
+  .desktop-icons {
+    left: 12px;
+    bottom: 12px;
+  }
+
+  .desktop-icon-content {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 6px;
+  }
+
+  .desktop-icon-label {
+    font-size: 10px;
+    max-width: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  #login-card {
+    padding: 24px;
+    margin: 16px;
+  }
+
+  #login-title {
+    font-size: 20px;
+  }
+
+  .about-card .liquid-glass,
+  .inbox-card .liquid-glass {
+    padding: 12px;
+  }
+}
