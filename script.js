@@ -32,7 +32,7 @@ const DEFAULT_CONFIG = {
   annotations: { enabled: true, highlight: "#ffe94d", entries: [] }
 };
 
-const $ = (id) => document.getElementById(id);
+const $ = (id) => document.getElementById(id.replace(/^#/, ""));
 const $all = (sel) => document.querySelectorAll(sel);
 
 // State
@@ -121,11 +121,11 @@ function setWallpaper(idx = null) {
   wallpaperIdx = ((wallpaperIdx % wallpapers.length) + wallpapers.length) % wallpapers.length;
 
   const img = document.createElement("img");
-  const existing = $("wallpapers img");
+  const existing = $all("#wallpapers img")[0];
   if (existing) existing.remove();
   img.src = wallpapers[wallpaperIdx];
   img.className = "active";
-  $("wallpapers").appendChild(img);
+  $("#wallpapers").appendChild(img);
 }
 
 /* ---------- Window Management ---------------------------------------------- */
@@ -434,18 +434,35 @@ function updateSections() {
 }
 
 function activateProfileSection() {
-  const profileCard = $("profile-card");
-  if (profileCard) {
-    profileCard.style.display = "block";
-  }
+  // Open profile window on login as the default view
+  openProfileWindow();
 }
 
 /* ---------- Music System -------------------------------------------------- */
 
 function loadMusic() {
-  const fallback = [{ title: "poison", artist: "Jaydes", src: "/Music/Jaydes - poison.flac", cover: null }];
-  tracks = fallback;
+  // Try to load from music-metadata.json, fall back to empty array
+  tracks = [];
   trackIdx = 0;
+
+  fetch("/music-metadata.json")
+    .then(res => res.json())
+    .then(data => {
+      tracks = data.map(t => ({
+        title: t.title || "Unknown",
+        artist: t.artist || "Unknown",
+        src: t.src || "",
+        cover: t.cover || null
+      }));
+      if (tracks.length > 0 && tracks[0].src) {
+        trackIdx = 0;
+        renderTrack();
+      }
+    })
+    .catch(err => {
+      console.warn("Could not load music metadata, using fallback");
+      tracks = [{ title: "No tracks", artist: "Music folder empty", src: "", cover: null }];
+    });
 }
 
 function renderTrack() {
@@ -466,9 +483,12 @@ function renderTrack() {
 
   if (t.src) {
     audio.src = t.src;
-    $("now-playing").href = t.src;
-    $("now-playing").textContent = `${t.title} - ${t.artist}`;
-    $("now-playing").hidden = false;
+    const nowPlaying = $("now-playing");
+    if (nowPlaying) {
+      nowPlaying.href = t.src;
+      nowPlaying.textContent = `${t.title} - ${t.artist}`;
+      nowPlaying.hidden = false;
+    }
   }
 
   playBtn.textContent = "▶";
