@@ -18,12 +18,12 @@ const DEFAULT_CONFIG = {
     { title: "YouTube", url: "https://youtube.com/@ProMaster420", icon: "/assets/optimized/icons/youtube.webp" }
   ],
   wallpapers: [
-    "/assets/optimized/wallpapers/default.webp",
-    "/assets/optimized/wallpapers/wallpaper1.webp",
-    "/assets/optimized/wallpapers/wallpaper2.webp",
-    "/assets/optimized/wallpapers/wallpaper3.webp",
-    "/assets/optimized/wallpapers/wallpaper4.webp",
-    "/assets/optimized/wallpapers/wallpaper5.webp"
+    "/assets/optimized/wallpapers/Bliss.webp",
+    "/assets/optimized/wallpapers/Ascent.webp",
+    "/assets/optimized/wallpapers/Azul.webp",
+    "/assets/optimized/wallpapers/Crystal.webp",
+    "/assets/optimized/wallpapers/Friend.webp",
+    "/assets/optimized/wallpapers/Windows XP.webp"
   ],
   inbox: { enabled: true, provider: "ngl", profileUrl: "https://ngl.link/jynxt__", title: "tell me your thoughts", maxLength: 500 },
   lastfm: { enabled: true, username: "ProMaster420" },
@@ -32,7 +32,12 @@ const DEFAULT_CONFIG = {
   annotations: { enabled: true, highlight: "#ffe94d", entries: [] }
 };
 
-const $ = (id) => document.getElementById(id.replace(/^#/, ""));
+// DOM Helper
+const $ = (id) => {
+  const element = document.getElementById(id.replace(/^#/, ""));
+  if (!element) console.warn(`Element not found: #${id.replace(/^#/, "")}`);
+  return element;
+};
 const $all = (sel) => document.querySelectorAll(sel);
 
 // State
@@ -44,6 +49,7 @@ let tracks = [];
 let wallpaperIdx = 0;
 let windows = {};
 let windowZIndex = 100;
+let dragState = null;
 
 /* ---------- Helpers ------------------------------------------------------- */
 
@@ -74,25 +80,6 @@ function safeSrc(u) {
   } catch { return ""; }
 }
 
-function loadImage(src) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.decoding = "async";
-    img.onload = () => (img.decode?.() ?? Promise.resolve()).catch(() => {}).finally(resolve);
-    img.onerror = resolve;
-    img.src = src;
-  });
-}
-
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, m => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;",
@@ -107,7 +94,8 @@ function updateClock() {
   const hours = String(now.getHours()).padStart(2, "0");
   const mins = String(now.getMinutes()).padStart(2, "0");
   const suffix = now.getHours() >= 12 ? "PM" : "AM";
-  $("taskbar-clock").textContent = `${hours}:${mins} ${suffix}`;
+  const clock = $("taskbar-clock");
+  if (clock) clock.textContent = `${hours}:${mins} ${suffix}`;
 }
 
 setInterval(updateClock, 1000);
@@ -117,7 +105,7 @@ updateClock();
 
 function setWallpaper(idx = null) {
   if (idx !== null) wallpaperIdx = idx;
-  const wallpapers = config.wallpapers || ["/assets/optimized/wallpapers/default.webp"];
+  const wallpapers = config.wallpapers || ["/assets/optimized/wallpapers/Bliss.webp"];
   wallpaperIdx = ((wallpaperIdx % wallpapers.length) + wallpapers.length) % wallpapers.length;
 
   const img = document.createElement("img");
@@ -156,6 +144,12 @@ function createWindow(id, title, content, options = {}) {
   win.querySelector(".window-content").innerHTML = content;
   win.style.left = options.left || "100px";
   win.style.top = options.top || "100px";
+
+  const width = options.width || "auto";
+  const height = options.height || "auto";
+  if (width !== "auto") win.style.width = width;
+  if (height !== "auto") win.style.height = height;
+
   win.style.zIndex = windowZIndex++;
 
   // Draggable titlebar
@@ -173,7 +167,8 @@ function createWindow(id, title, content, options = {}) {
     });
   });
 
-  $("windows-container").appendChild(win);
+  const windowsContainer = document.getElementById("windows");
+  if (windowsContainer) windowsContainer.appendChild(win);
   windows[id] = { element: win, open: true };
   return win;
 }
@@ -196,8 +191,6 @@ function closeWindow(id) {
 }
 
 /* ---------- Drag Implementation ------------------------------------------- */
-
-let dragState = null;
 
 function startDrag(win, e) {
   dragState = { win, startX: e.clientX, startY: e.clientY, startLeft: win.offsetLeft, startTop: win.offsetTop };
@@ -234,29 +227,41 @@ function handleWindowButton(win, action) {
 /* ---------- Login -------------------------------------------------------- */
 
 function initLogin() {
-  const loginScreen = $("#login-screen");
-  const loginCard = $("#login-card");
-  const loginBtn = $("#login-btn");
+  const welcomeScreen = $("#welcome-screen");
+  const enterBtn = $("#enter-btn");
+  const welcomeDialog = $("#welcome-dialog");
+  const xpLogo = $("#xp-logo");
 
-  // Login button click handler - primary interaction
-  loginBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    transitionToDesktop();
-  });
+  if (enterBtn) {
+    enterBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      transitionToDesktop();
+    });
+  }
 
-  // Also allow clicking anywhere on the login card (but not the XP logo area)
-  loginCard.addEventListener("click", (e) => {
-    // Don't respond if clicking the XP logo
-    if (e.target.closest("#xp-logo")) return;
-    transitionToDesktop();
-  });
+  if (welcomeDialog) {
+    welcomeDialog.addEventListener("click", (e) => {
+      // Don't respond if clicking the XP logo area
+      if (xpLogo && xpLogo.contains(e.target)) return;
+      transitionToDesktop();
+    });
+  }
 }
 
 function transitionToDesktop() {
-  $("#login-screen").classList.add("hidden");
-  document.body.classList.add("entered");
-  activateProfileSection();
-  updateSections();
+  const welcomeScreen = $("#welcome-screen");
+  if (welcomeScreen) {
+    welcomeScreen.style.transition = "opacity 0.5s ease";
+    welcomeScreen.style.opacity = "0";
+    setTimeout(() => {
+      welcomeScreen.style.display = "none";
+      document.body.classList.add("entered");
+      activateProfileSection();
+    }, 500);
+  } else {
+    document.body.classList.add("entered");
+    activateProfileSection();
+  }
 }
 
 /* ---------- Profile Window ----------------------------------------------- */
@@ -299,11 +304,14 @@ function openGalleryWindow() {
   `;
   const win = createWindow("gallery-win", "jynxt - Gallery", content, { left: 100, top: 150, width: "400px" });
 
-  win.querySelectorAll(".gallery-item").forEach(el => {
-    el.addEventListener("click", () => {
-      setWallpaper(parseInt(el.dataset.index));
+  if (win) {
+    win.querySelectorAll(".gallery-item").forEach(el => {
+      el.addEventListener("click", () => {
+        setWallpaper(parseInt(el.dataset.index));
+        closeWindow("gallery-win");
+      });
     });
-  });
+  }
 }
 
 /* ---------- Music Window -------------------------------------------------- */
@@ -322,15 +330,15 @@ function openMusicWindow() {
   `;
 
   const win = createWindow("music-win", "jynxt - Music", content, { left: 200, top: 200 });
-  renderTrackToWindow(win);
+  if (win) renderTrackToWindow(win);
 }
 
 function renderTrackToWindow(win) {
   const title = win.querySelector("#music-current");
   const artist = win.querySelector("#music-artist");
   if (tracks[trackIdx]) {
-    title.textContent = tracks[trackIdx].title;
-    artist.textContent = tracks[trackIdx].artist;
+    if (title) title.textContent = tracks[trackIdx].title;
+    if (artist) artist.textContent = tracks[trackIdx].artist;
   }
 }
 
@@ -347,47 +355,55 @@ function openWallpaperWindow() {
           </div>
         `).join("")}
       </div>
-      <button id="wp-apply" style="margin-top: 12px; padding: 6px 16px; background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%); border: 2px solid #000000; border-top: 2px solid #ffffff; border-left: 2px solid #ffffff; border-right: 2px solid #808080; border-bottom: 2px solid #808080; border-radius: 0; cursor: pointer; font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; font-weight: bold; color: #000000; box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);">Apply</button>
+      <button id="wp-apply" style="margin-top: 12px; padding: 6px 16px; background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%); border: 2px solid #000000; border-top: 2px solid #ffffff; border-left: 2px solid #ffffff; border-right: 2px solid #000080; border-bottom: 2px solid #000080; border-radius: 0; cursor: pointer; font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; font-weight: bold; color: #000000; box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);">Apply</button>
     </div>
   `;
 
   const win = createWindow("wallpaper-win", "jynxt - Wallpaper", content, { left: 150, top: 150 });
-  const applyBtn = win.querySelector("#wp-apply");
-  let selected = wallpaperIdx;
 
-  win.querySelectorAll(".wp-option").forEach(el => {
-    el.addEventListener("click", () => {
-      selected = parseInt(el.dataset.index);
-      win.querySelectorAll(".wp-option").forEach(o => {
-        o.style.borderColor = "#000080";
-        o.style.borderTopColor = "#ffffff";
-        o.style.borderLeftColor = "#ffffff";
-        o.style.borderRightColor = "#000080";
-        o.style.borderBottomColor = "#000080";
+  if (win) {
+    const applyBtn = win.querySelector("#wp-apply");
+    let selected = wallpaperIdx;
+
+    win.querySelectorAll(".wp-option").forEach(el => {
+      el.addEventListener("click", () => {
+        selected = parseInt(el.dataset.index);
+        win.querySelectorAll(".wp-option").forEach(o => {
+          o.style.borderColor = "#000080";
+          o.style.borderTopColor = "#ffffff";
+          o.style.borderLeftColor = "#ffffff";
+          o.style.borderRightColor = "#000080";
+          o.style.borderBottomColor = "#000080";
+        });
+        el.style.borderColor = "#0078d7";
+        el.style.borderTopColor = "#ffffff";
+        el.style.borderLeftColor = "#ffffff";
+        el.style.borderRightColor = "#0078d7";
+        el.style.borderBottomColor = "#0078d7";
       });
-      el.style.borderColor = "#0078d7";
-      el.style.borderTopColor = "#ffffff";
-      el.style.borderLeftColor = "#ffffff";
-      el.style.borderRightColor = "#0078d7";
-      el.style.borderBottomColor = "#0078d7";
     });
-  });
 
-  applyBtn.addEventListener("click", () => {
-    setWallpaper(selected);
-  });
+    if (applyBtn) {
+      applyBtn.addEventListener("click", () => {
+        setWallpaper(selected);
+        closeWindow("wallpaper-win");
+      });
+    }
+  }
 }
 
 /* ---------- Desktop Icons ------------------------------------------------- */
 
 function initDesktopIcons() {
-  const icons = $("desktop-icons");
-  icons.querySelectorAll(".desktop-icon").forEach(icon => {
+  const icons = $("#desktop-icons");
+  if (!icons) return;
+
+  icons.querySelectorAll(".desktop-item").forEach(icon => {
     icon.addEventListener("dblclick", () => {
       const app = icon.dataset.app;
       if (app === "profile") openProfileWindow();
       else if (app === "gallery") openGalleryWindow();
-      else if (app === "music") { openMusicWindow(); }
+      else if (app === "music") openMusicWindow();
       else if (app === "wallpaper") openWallpaperWindow();
     });
   });
@@ -399,39 +415,67 @@ function initStartMenu() {
   const startBtn = $("start-btn");
   const startMenu = $("start-menu");
 
-  startBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    startMenu.style.display = startMenu.style.display === "block" ? "none" : "block";
-  });
-
-  startMenu.querySelectorAll(".start-menu-item").forEach(item => {
-    item.addEventListener("click", (e) => {
+  if (startBtn) {
+    startBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      const action = item.dataset.action;
-      startMenu.style.display = "none";
-
-      if (action === "profile") openProfileWindow();
-      else if (action === "gallery") openGalleryWindow();
-      else if (action === "music") { openMusicWindow(); renderTrack(); }
-      else if (action === "wallpaper") openWallpaperWindow();
+      if (startMenu) {
+        startMenu.style.display = startMenu.style.display === "block" ? "none" : "block";
+      }
     });
-  });
+  }
 
-  document.addEventListener("click", (e) => {
-    if (!startMenu.contains(e.target) && e.target !== startBtn) {
-      startMenu.style.display = "none";
+  if (startMenu) {
+    // Add Annotations menu item if enabled
+    if (config.annotations?.enabled) {
+      const annotationItem = document.createElement("div");
+      annotationItem.className = "menu-item";
+      annotationItem.dataset.action = "annotations";
+      annotationItem.textContent = "Annotations";
+      startMenu.appendChild(annotationItem);
     }
-  });
+
+    // Add Message/Inbox menu item if enabled
+    if (config.inbox?.enabled) {
+      const inboxItem = document.createElement("div");
+      inboxItem.className = "menu-item";
+      inboxItem.dataset.action = "inbox";
+      inboxItem.textContent = "Message";
+      startMenu.appendChild(inboxItem);
+    }
+
+    // Add About menu item
+    const aboutItem = document.createElement("div");
+    aboutItem.className = "menu-item";
+    aboutItem.dataset.action = "about";
+    aboutItem.textContent = "About";
+    startMenu.appendChild(aboutItem);
+
+    // Handle menu item clicks
+    startMenu.querySelectorAll(".menu-item").forEach(item => {
+      item.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const action = item.dataset.action;
+        startMenu.style.display = "none";
+
+        if (action === "profile") openProfileWindow();
+        else if (action === "gallery") openGalleryWindow();
+        else if (action === "music") openMusicWindow();
+        else if (action === "wallpaper") openWallpaperWindow();
+        else if (action === "annotations") openAnnotationsWindow();
+        else if (action === "inbox") openInboxWindow();
+        else if (action === "about") openAboutWindow();
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!startMenu.contains(e.target) && e.target !== startBtn) {
+        startMenu.style.display = "none";
+      }
+    });
+  }
 }
 
 /* ---------- Sections Control ---------------------------------------------- */
-
-let sections = [];
-
-function updateSections() {
-  sections = $all(".card-section");
-  sections.forEach(el => el.style.display = "none");
-}
 
 function activateProfileSection() {
   // Open profile window on login as the default view
@@ -456,7 +500,7 @@ function loadMusic() {
       }));
       if (tracks.length > 0 && tracks[0].src) {
         trackIdx = 0;
-        renderTrack();
+        renderTrackIsland();
       }
     })
     .catch(err => {
@@ -465,64 +509,327 @@ function loadMusic() {
     });
 }
 
-function renderTrack() {
+function renderTrackIsland() {
   if (!tracks[trackIdx]) return;
   const t = tracks[trackIdx];
 
-  $("track-title").textContent = t.title || "";
-  $("track-artist").textContent = t.artist || "";
+  const islandTitle = $("island-title");
+  const islandArtist = $("island-artist");
+  const islandCover = $("island-cover");
+  const audioPlayer = $("audio-player");
 
-  const audio = $("audio");
-  const playBtn = $("play-btn");
+  if (islandTitle) islandTitle.textContent = t.title || "";
+  if (islandArtist) islandArtist.textContent = t.artist || "";
 
-  if (t.cover) {
-    $("cover").innerHTML = `<img src="${safeSrc(t.cover)}">`;
-  } else {
-    $("cover").textContent = "♪";
+  if (t.cover && islandCover) {
+    islandCover.innerHTML = `<img src="${safeSrc(t.cover)}" style="width: 36px; height: 36px; object-fit: cover;">`;
   }
 
-  if (t.src) {
-    audio.src = t.src;
-    const nowPlaying = $("now-playing");
-    if (nowPlaying) {
-      nowPlaying.href = t.src;
-      nowPlaying.textContent = `${t.title} - ${t.artist}`;
-      nowPlaying.hidden = false;
-    }
+  if (audioPlayer && t.src) {
+    audioPlayer.src = t.src;
   }
-
-  playBtn.textContent = "▶";
 }
 
 function stepTrack(dir) {
   if (!tracks.length) return;
   trackIdx = (trackIdx + dir + tracks.length) % tracks.length;
-  renderTrack();
-  renderTrackToWindow(windows["music-win"]);
+  renderTrackIsland();
 }
 
 function togglePlay() {
-  const audio = $("audio");
-  const btn = $("play-btn");
+  const audioPlayer = $("#audio-player");
+  const playBtn = $("#play-btn");
+  if (!audioPlayer || !playBtn) return;
+
   playing = !playing;
-  if (playing) audio.play().catch(() => {});
-  else audio.pause();
-  btn.textContent = playing ? "⏸" : "▶";
+  if (playing) {
+    audioPlayer.play().catch(() => {});
+  } else {
+    audioPlayer.pause();
+  }
+  playBtn.textContent = playing ? "⏸" : "▶";
 }
 
 function initMusicControls() {
-  $("play-btn").addEventListener("click", togglePlay);
-  $("prev-btn").addEventListener("click", () => stepTrack(-1));
-  $("next-btn").addEventListener("click", () => stepTrack(1));
-  $("audio").addEventListener("ended", () => stepTrack(1));
+  const playBtn = $("play-btn");
+  const prevBtn = $("prev-btn");
+  const nextBtn = $("next-btn");
+  const audioPlayer = $("audio-player");
+  const muteBtn = $("mute-btn");
+  const islandCover = $("island-cover");
+  const wpMute = $("wp-mute");
 
-  $("mute-btn").addEventListener("click", (e) => {
-    e.stopPropagation();
-    muted = !muted;
-    $("mute-icon").src = muted ? "/assets/optimized/icons/volume-off.webp" : "/assets/optimized/icons/volume-on.webp";
-    $("mute-btn").setAttribute("aria-label", muted ? "Unmute" : "Mute");
-    $("audio").muted = muted;
+  if (playBtn) {
+    playBtn.addEventListener("click", togglePlay);
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => stepTrack(-1));
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => stepTrack(1));
+  }
+
+  if (audioPlayer) {
+    audioPlayer.addEventListener("ended", () => stepTrack(1));
+  }
+
+  if (muteBtn) {
+    muteBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      muted = !muted;
+      muteBtn.textContent = muted ? "🔇" : "🔊";
+      if (audioPlayer) audioPlayer.muted = muted;
+    });
+  }
+
+  if (wpMute) {
+    wpMute.addEventListener("click", (e) => {
+      e.stopPropagation();
+      muted = !muted;
+      wpMute.textContent = muted ? "🔇" : "🔊";
+      if (audioPlayer) audioPlayer.muted = muted;
+    });
+  }
+
+  if (islandCover) {
+    islandCover.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (tracks[trackIdx]?.src) {
+        window.open(tracks[trackIdx].src, "_blank");
+      }
+    });
+  }
+}
+
+/* ---------- Annotation System --------------------------------------------- */
+
+let currentAnnotations = [];
+let activeAnnotation = null;
+
+async function loadAnnotations() {
+  try {
+    const res = await fetch("/config.json", { cache: "no-cache" });
+    const cfg = await res.json();
+    currentAnnotations = cfg.annotations?.entries || [];
+
+    // Group by song title
+    const songs = new Map();
+    currentAnnotations.forEach(entry => {
+      const key = entry.title;
+      if (!songs.has(key)) {
+        songs.set(key, {
+          id: entry.id,
+          title: entry.title,
+          artist: entry.artist,
+          cover: entry.cover,
+          audio: entry.audio,
+          annotations: []
+        });
+      }
+      songs.get(key).annotations.push(entry);
+    });
+
+    currentAnnotations = Array.from(songs.values());
+  } catch (e) {
+    console.error("Failed to load annotations:", e);
+    currentAnnotations = [];
+  }
+}
+
+function openAnnotation(entry) {
+  activeAnnotation = entry;
+  const overlay = $("annotation-overlay");
+  const title = $("annotation-title");
+  const artist = $("annotation-artist");
+  const cover = $("annotation-cover");
+  const lyrics = $("annotation-lyrics");
+  const text = $("annotation-text");
+  const fullLink = $("annotation-full-link");
+  const geniusLink = $("annotation-genius-link");
+
+  const annotation = entry.entry || entry;
+
+  if (title) title.textContent = annotation.title || "";
+  if (artist) artist.textContent = annotation.artist || "";
+  if (text) text.textContent = annotation.annotation || "";
+
+  if (cover) {
+    if (annotation.cover) {
+      cover.innerHTML = `<img src="${safeSrc(annotation.cover)}" alt="${escapeHtml(annotation.title || "")}" />`;
+    } else {
+      cover.innerHTML = "";
+    }
+  }
+
+  // Format lyrics with line breaks
+  if (lyrics) {
+    const rawLyrics = annotation.lyrics || "";
+    const formattedLyrics = rawLyrics.split("\n").map(line => escapeHtml(line)).join("</div><div>");
+    lyrics.innerHTML = `<div class="lyrics-container">${formattedLyrics ? `<div>${formattedLyrics}</div>` : ''}</div>`;
+
+    // Set context before/after
+    const contextHtml = [];
+    if (annotation.before) contextHtml.push(`<div class="context before">${escapeHtml(annotation.before)}</div>`);
+    contextHtml.push(`<div class="lyrics">${lyrics.innerHTML}</div>`);
+    if (annotation.after) contextHtml.push(`<div class="context after">${escapeHtml(annotation.after)}</div>`);
+    lyrics.innerHTML = contextHtml.join("");
+  }
+
+  // Set genius link
+  if (geniusLink && annotation.geniusUrl) {
+    geniusLink.href = annotation.geniusUrl;
+    geniusLink.textContent = "View on Genius";
+    geniusLink.style.display = "inline-block";
+  } else if (geniusLink) {
+    geniusLink.style.display = "none";
+  }
+
+  // Set full song link - look in fullSongs array from config
+  if (fullLink) {
+    fullLink.style.display = "none";
+    if (annotation.fullSong) {
+      fullLink.href = annotation.fullSong.url;
+      fullLink.textContent = annotation.fullSong.title;
+      fullLink.style.display = "inline-block";
+    }
+  }
+
+  if (overlay) overlay.classList.add("active");
+}
+
+function closeAnnotation() {
+  const overlay = $("annotation-overlay");
+  if (overlay) overlay.classList.remove("active");
+  activeAnnotation = null;
+}
+
+function renderAnnotationBrowser() {
+  const container = document.getElementById("annotation-list");
+  if (!container) return;
+
+  if (!currentAnnotations.length) {
+    container.innerHTML = '<div class="no-annotations">No annotations available</div>';
+    return;
+  }
+
+  container.innerHTML = currentAnnotations.map(song => `
+    <div class="annotation-song" data-song="${song.id}">
+      <h4 class="song-title">${escapeHtml(song.title)}</h4>
+      <p class="song-artist">${escapeHtml(song.artist)}</p>
+      <div class="annotation-previews">
+        ${song.annotations.map(a => `
+          <div class="annotation-preview" data-id="${a.id}">
+            <span class="highlight-tag" style="background: ${config.annotations?.highlight || '#ffe94d'};">annotation</span>
+            <span class="preview-text">${escapeHtml((a.annotation || "").substring(0, 60))}...</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join("");
+
+  // Add click handlers
+  if (container) {
+    container.querySelectorAll(".annotation-preview").forEach(el => {
+      el.addEventListener("click", () => {
+        const id = el.dataset.id;
+        const entry = currentAnnotations.flatMap(s => s.annotations).find(a => a.id === id);
+        if (entry) {
+          openAnnotation({ entry, title: entry.title, artist: entry.artist });
+        }
+      });
+    });
+  }
+
+  // Close button
+  const closeBtn = $("annotation-close");
+  if (closeBtn) closeBtn.addEventListener("click", closeAnnotation);
+
+  // Click outside to close
+  const overlay = $("annotation-overlay");
+  if (overlay) overlay.addEventListener("click", (e) => {
+    if (e.target === e.currentTarget) closeAnnotation();
   });
+}
+
+function openAnnotationsWindow() {
+  const content = `
+    <div id="annotations-content" style="font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; color: #000000;">
+      <div id="annotation-list" style="overflow-y: auto; padding: 12px;"></div>
+    </div>
+  `;
+  createWindow("annotations-win", "jynxt - Annotations", content, { left: 150, top: 150, width: "400px", height: "300px" });
+  renderAnnotationBrowser();
+}
+
+/* ---------- Inbox Window -------------------------------------------------- */
+
+function openInboxWindow() {
+  const inbox = config.inbox || {};
+  if (!inbox.enabled) return;
+
+  const content = `
+    <div id="inbox-content" style="font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; color: #000000; padding: 12px;">
+      <h3 style="margin-bottom: 8px;">${escapeHtml(inbox.title || "Message")}</h3>
+      <p style="color: #666666; font-size: 12px; margin-bottom: 12px;">${escapeHtml(inbox.subtitle || "")}</p>
+      <div style="background: #f0f0f0; border: 2px solid #000080; border-top: 2px solid #ffffff; border-left: 2px solid #ffffff; padding: 12px;">
+        <form id="inbox-form" target="_blank" action="${safeHref(inbox.profileUrl)}" method="POST">
+          <textarea name="message" placeholder="${escapeHtml(inbox.placeholder || "Send a message...")}" rows="4" style="width: 100%; margin-bottom: 12px; padding: 8px; border: 2px solid #000080; background: #ffffff; color: #000000; resize: vertical;"></textarea>
+          <button type="submit" style="width: 100%; padding: 8px; background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%); border: 2px solid #000000; border-top: 2px solid #ffffff; border-left: 2px solid #ffffff; color: #000000; font-weight: bold; cursor: pointer;">${escapeHtml(inbox.submitLabel || "Submit")}</button>
+        </form>
+      </div>
+    </div>
+  `;
+  createWindow("inbox-win", "jynxt - Message", content, { left: 200, top: 200, width: "350px" });
+}
+
+/* ---------- About Window -------------------------------------------------- */
+
+function openAboutWindow() {
+  const about = config.about || {};
+  const content = `
+    <div id="about-content" style="font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; color: #000000; padding: 12px;">
+      <h1 style="margin-bottom: 16px; font-size: 18px;">${escapeHtml(about.title || "About")}</h1>
+      <div style="background: #f0f0f0; border: 2px solid #000080; border-top: 2px solid #ffffff; border-left: 2px solid #ffffff; padding: 12px;">
+        <p style="margin: 0 0 12px; color: #000000;">${escapeHtml(about.text || "")}</p>
+        <p style="margin: 0; color: #666666; font-size: 12px;">Site: ${escapeHtml(config.site?.title || "jynxt")}</p>
+      </div>
+    </div>
+  `;
+  createWindow("about-win", "jynxt - About", content, { left: 150, top: 150 });
+}
+
+/* ---------- Quick Launch -------------------------------------------------- */
+
+function initQuickLaunch() {
+  const quickLaunch = $(".quick-launch");
+  if (!quickLaunch) return;
+
+  quickLaunch.addEventListener("dblclick", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Quick launch placeholder - could be configured for favorite apps
+    openProfileWindow();
+  });
+}
+
+/* ---------- Last.fm Widget ------------------------------------------------ */
+
+async function loadLastFm() {
+  const lastfm = config.lastfm;
+  if (!lastfm?.enabled || !lastfm.username) return;
+
+  try {
+    const res = await fetch(`https://last.fm/api/active_records?user=${encodeURIComponent(lastfm.username)}`, { mode: 'cors' });
+    if (!res.ok) throw new Error("Last.fm API error");
+
+    const data = await res.json();
+    // Process Last.fm data if available
+    console.log("Last.fm data loaded:", data);
+  } catch (e) {
+    console.warn("Could not load Last.fm data:", e.message);
+  }
 }
 
 /* ---------- Config -------------------------------------------------------- */
@@ -551,6 +858,13 @@ async function boot() {
   initMusicControls();
   initDesktopIcons();
   initStartMenu();
+  initQuickLaunch();
+
+  // Initialize annotations browser (for when window is opened)
+  loadAnnotations();
+
+  // Initialize Last.fm widget
+  loadLastFm();
 
   if (PREVIEW) {
     document.body.classList.add("entered");

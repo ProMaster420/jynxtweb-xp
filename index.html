@@ -1,149 +1,151 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#05060a" />
-    <meta name="description" content="jynxt - a Windows XP-style personal music website" />
-    <title>jynxt</title>
-    <link rel="stylesheet" href="/styles.css" />
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jynxt - Windows XP</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Wallpaper Background -->
+  <div id="wallpapers">
+    <img src="assets/optimized/wallpapers/Bliss.webp" alt="Windows XP Wallpaper">
+  </div>
 
-  <body>
-    <!-- Wallpaper Background -->
-    <div id="wallpapers" aria-hidden="true">
-      <img src="/assets/optimized/wallpapers/Bliss.webp" alt="Bliss Wallpaper" class="login-bg">
+  <!-- Classic Windows XP Welcome Screen - 1:1 authentic recreation -->
+  <div id="welcome-screen">
+    <!-- XP Logo container - positioned at top center -->
+    <div id="xp-logo-container">
+      <div id="xp-logo">
+        <!-- Stylized XP flag - triangular elements -->
+        <div id="xp-flag-left"></div>
+        <div id="xp-flag-right"></div>
+      </div>
     </div>
 
-    <!-- Login Screen - Windows XP Welcome Screen -->
-    <div id="login-screen">
-      <!-- Windows XP Logo -->
-      <div id="xp-logo">
-        <img src="/assets/optimized/icons/windows-xp.webp" alt="Windows XP" />
-      </div>
+    <!-- Login Dialog - exactly 280px wide, centered -->
+    <div id="welcome-dialog">
+      <div id="welcome-card">
+        <div id="welcome-content">
+          <!-- User Avatar frame (56x56, circular with 3D border) -->
+          <div id="avatar-frame">
+            <img id="user-avatar" src="assets/optimized/avatars/profile1.webp" alt="jynxt">
+          </div>
 
-      <!-- User Account Panel -->
-      <div id="login-card">
-        <img id="login-avatar" src="/assets/optimized/avatars/profile1.webp" alt="jynxt" />
-        <div id="user-info">
-          <h1 id="login-title">jynxt</h1>
-          <p id="login-subtitle">welcome</p>
+          <!-- User Name -->
+          <h1 id="user-name">jynxt</h1>
+
+          <!-- Welcome Message -->
+          <p id="welcome-msg">Welcome</p>
+
+          <!-- Enter Button - XP 3D style -->
+          <button id="enter-btn" type="button">Enter</button>
         </div>
-        <button id="login-btn">enter</button>
       </div>
 
-      <!-- Windows XP branding -->
+      <!-- Windows XP Branding at bottom -->
       <div id="xp-branding">
         <span>Windows XP</span>
       </div>
     </div>
+  </div>
 
-    <!-- Vignette Overlay -->
-    <div id="vignette"></div>
+  <!-- Vignette (visible after login) -->
+  <div id="vignette"></div>
 
-    <!-- Mute Button -->
-    <button id="mute-btn" type="button" data-no-reveal aria-label="Mute" class="win-button small">
-      <img id="mute-icon" src="/assets/optimized/icons/volume-on.webp" alt="" draggable="false" />
-    </button>
+  <!-- Mute Button -->
+  <button id="mute-btn" data-no-reveal title="Mute">🔊</button>
 
-    <!-- Desktop Environment -->
-    <div id="desktop">
-      <div id="desktop-icons">
-        <div class="desktop-icon" data-app="profile">
-          <div class="desktop-icon-content">
-            <img src="/assets/optimized/icons/profile-icon.webp" alt="Profile" />
-          </div>
-          <div class="desktop-icon-label">jynxt</div>
-        </div>
-        <div class="desktop-icon" data-app="gallery">
-          <div class="desktop-icon-content">
-            <img src="/assets/optimized/icons/gallery.webp" alt="Gallery" />
-          </div>
-          <div class="desktop-icon-label">gallery</div>
-        </div>
-        <div class="desktop-icon" data-app="music">
-          <div class="desktop-icon-content">
-            <img src="/assets/optimized/icons/music-player.webp" alt="Music" />
-          </div>
-          <div class="desktop-icon-label">music</div>
-        </div>
-        <div class="desktop-icon" data-app="wallpaper">
-          <div class="desktop-icon-content">
-            <img src="/assets/optimized/icons/wallpaper.webp" alt="Wallpaper" />
-          </div>
-          <div class="desktop-icon-label">wallpaper</div>
-        </div>
+  <!-- Desktop Icons -->
+  <div id="desktop-icons">
+    <div class="desktop-item" data-app="profile">
+      <div class="icon-box">
+        <img src="assets/optimized/icons/profile-icon.webp" alt="Profile">
+      </div>
+      <div class="icon-label">jynxt</div>
+    </div>
+    <div class="desktop-item" data-app="gallery">
+      <div class="icon-box">
+        <img src="assets/optimized/icons/gallery.webp" alt="Gallery">
+      </div>
+      <div class="icon-label">gallery</div>
+    </div>
+    <div class="desktop-item" data-app="music">
+      <div class="icon-box">
+        <img src="assets/optimized/icons/music-player.webp" alt="Music">
+      </div>
+      <div class="icon-label">music</div>
+    </div>
+    <div class="desktop-item" data-app="wallpaper">
+      <div class="icon-box">
+        <img src="assets/optimized/icons/wallpaper-selector.webp" alt="Wallpaper">
+      </div>
+      <div class="icon-label">wallpaper</div>
+    </div>
+  </div>
+
+  <!-- Windows Container -->
+  <div id="windows"></div>
+
+  <!-- Taskbar -->
+  <div id="taskbar">
+    <div id="start-btn">
+      <span>START</span>
+    </div>
+    <div id="taskbar-right">
+      <div class="quick-launch">
+        <span>?</span>
+      </div>
+      <div id="taskbar-clock">00:00 PM</div>
+    </div>
+  </div>
+
+  <!-- Start Menu -->
+  <div id="start-menu">
+    <div class="menu-user">
+      <img src="assets/optimized/avatars/profile1.webp" alt="">
+      <strong>jynxt</strong>
+    </div>
+    <div class="menu-separator"></div>
+    <div class="menu-item" data-action="profile">Profile</div>
+    <div class="menu-item" data-action="gallery">Gallery</div>
+    <div class="menu-item" data-action="music">Music Player</div>
+    <div class="menu-item" data-action="wallpaper">Wallpaper</div>
+  </div>
+
+  <!-- Music Island -->
+  <div id="music-island" data-no-reveal>
+    <div id="island-cover">♪</div>
+    <div class="island-info">
+      <div id="island-title"></div>
+      <div id="island-artist"></div>
+    </div>
+    <div class="island-controls">
+      <button id="prev-btn">⏮</button>
+      <button id="play-btn">▶</button>
+      <button id="next-btn">⏭</button>
+    </div>
+    <audio id="audio-player" preload="none"></audio>
+  </div>
+
+  <!-- Annotation Overlay -->
+  <div id="annotation-overlay">
+    <div id="annotation-panel">
+      <header class="annotation-header">
+        <h2 id="annotation-title"></h2>
+        <span id="annotation-artist"></span>
+        <button id="annotation-close">✕</button>
+      </header>
+      <img id="annotation-cover">
+      <div id="annotation-lyrics"></div>
+      <div id="annotation-text"></div>
+      <div class="annotation-links">
+        <a id="annotation-full-link" target="_blank"></a>
+        <a id="annotation-genius-link" target="_blank"></a>
       </div>
     </div>
+  </div>
 
-    <!-- Content Windows -->
-    <div id="content">
-      <div id="windows-container"></div>
-    </div>
-
-    <!-- Taskbar -->
-    <div id="taskbar" data-no-reveal>
-      <div id="taskbar-start-button">
-        <span id="start-btn">START</span>
-      </div>
-      <div id="taskbar-taskbar">
-        <div class="taskbar-spacer"></div>
-        <div id="taskbar-clock">00:00 AM</div>
-      </div>
-    </div>
-
-    <!-- Start Menu -->
-    <div id="start-menu" class="start-menu">
-      <div class="start-menu-content">
-        <div class="start-menu-user">
-          <img src="/assets/optimized/avatars/profile1.webp" alt="" />
-          <span>jynxt</span>
-        </div>
-        <div class="start-menu-separator"></div>
-        <div class="start-menu-item" data-action="profile">Profile</div>
-        <div class="start-menu-item" data-action="gallery">Gallery</div>
-        <div class="start-menu-item" data-action="music">Music Player</div>
-        <div class="start-menu-item" data-action="wallpaper">Wallpaper</div>
-      </div>
-    </div>
-
-    <!-- Music Player Island -->
-    <div id="island" class="music-island glass-card" data-no-reveal>
-      <audio id="audio" preload="none" playsinline></audio>
-      <div id="cover" class="music-cover-tile">♪</div>
-      <div class="island-meta">
-        <div id="track-title" class="track-title"></div>
-        <div id="track-artist" class="track-artist"></div>
-      </div>
-      <div class="island-controls">
-        <button type="button" id="prev-btn" aria-label="Previous">⏮</button>
-        <button type="button" id="play-btn" aria-label="Play">▶</button>
-        <button type="button" id="next-btn" aria-label="Next">⏭</button>
-      </div>
-    </div>
-
-    <!-- Annotation Overlay -->
-    <div id="annotation-overlay" class="annotation-overlay">
-      <div id="annotation-container">
-        <div id="annotation-content">
-          <div class="annotation-header">
-            <h2 id="annotation-title"></h2>
-            <span id="annotation-artist"></span>
-            <button id="annotation-close" aria-label="Close">✕</button>
-          </div>
-          <div id="annotation-cover" class="annotation-cover"></div>
-          <div id="annotation-lyrics" class="annotation-lyrics"></div>
-          <div class="annotation-text" id="annotation-text"></div>
-          <div class="annotation-action">
-            <a id="annotation-full-link" target="_blank" rel="noopener noreferrer"></a>
-            <a id="annotation-genius-link" target="_blank" rel="noopener noreferrer"></a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Main Scripts -->
-    <script src="/fonts.js" type="module"></script>
-    <script src="/script.js" type="module"></script>
-  </body>
+  <script src="script.js" type="module"></script>
+</body>
 </html>
