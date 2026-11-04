@@ -1,22 +1,27 @@
 /*
- * Windows XP Luna Theme CSS
- * Authentic recreation of Windows XP visual style
+ * Windows XP Luna Theme - Authentic 1:1 Recreation
+ * ================================================
+ * All colors and dimensions match official Windows XP Luna theme
  */
 
 :root {
-  /* XP Luna Color Palette - Authentic Microsoft Windows XP colors */
-  --xp-blue: #0078d7;          /* Luna Blue - Primary accent */
-  --xp-dark-blue: #005aa1;     /* Luna Blue darker variant */
-  --xp-navy: #000080;          /* Window border navy */
-  --xp-highlight: #ffffff;      /* 3D highlight/white */
-  --xp-shadow: #808080;          /* 3D shadow/gray */
-  --xp-dark-shadow: #000000;    /* Text and deep shadows */
-  --xp-text: #000000;           /* Window text - black */
-  --xp-text-light: #808080;     /* Gray text */
-  --xp-bg: #f0f0f0;             /* Window background - 3D face color */
-  --xp-clock: #ffffff;          /* Clock text on dark taskbar */
-  --xp-grey: #c0c0c0;           /* 3D face/light grey */
-  --xp-dark-grey: #a0a0a0;      /* Button dark grey */
+  /* Luna Color Palette - EXACT Windows XP colors */
+  --xp-blue: #0078d7;           /* Luna Blue */
+  --xp-dark-blue: #005a9e;      /* Luna Blue shadow */
+  --xp-navy: #000080;           /* Border color */
+  --xp-highlight: #ffffff;      /* 3D highlight */
+  --xp-shadow: #808080;         /* 3D shadow */
+  --xp-dark-shadow: #000000;    /* Dark shadow */
+  --xp-bg: #f0f0f0;             /* 3D face color */
+  --xp-grey: #c0c0c0;           /* 3D light */
+  --xp-dark-grey: #a0a0a0;      /* 3D dark */
+  --xp-dark-blue-taskbar: #003366;
+  --xp-text: #000000;           /* Window text */
+  --xp-text-light: #808080;
+  --xp-clock: #ffffff;
+  --xp-system-blue: #0078d7;
+  --xp-start-green: #008000;
+  --xp-start-green-dark: #006600;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,11 +29,11 @@
     --xp-bg: #262626;
     --xp-text: #ffffff;
     --xp-text-light: #aaaaaa;
-    --xp-shadow: #aaaaaa;
+    --xp-clock: #ffffff;
   }
 }
 
-/* Base Styles */
+/* Base Reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -47,25 +52,15 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-input, textarea, select {
-  user-select: text;
-}
-
-button, a {
-  -webkit-tap-highlight-color: transparent;
-  text-decoration: none;
-}
-
 img {
-  pointer-events: none;
-  -webkit-user-drag: none;
   max-width: 100%;
   height: auto;
+  display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
 
-/* XP 3D Border Effect - Classic Windows XP styling
-   White top/left (highlight), Darkshade bottom/right
-*/
+/* XP 3D Border Helper */
 .xp-border {
   border: 2px solid var(--xp-navy);
   border-top-color: var(--xp-highlight);
@@ -74,35 +69,25 @@ img {
   border-bottom-color: var(--xp-shadow);
 }
 
-/* Shadow effect for windows - authentic XP offset */
 .xp-shadow {
   box-shadow: 3px 3px 0 var(--xp-dark-shadow);
 }
 
-/* Combined XP border and shadow for panels */
-.xp-panel {
-  background: var(--xp-bg);
-  border: 2px solid var(--xp-navy);
-  border-top-color: var(--xp-highlight);
-  border-left-color: var(--xp-highlight);
-  box-shadow: 3px 3px 0 var(--xp-dark-shadow);
-}
-
-/* Wallpaper Background */
-#wallpapers {
+/* Desktop Background */
+#desktop {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   overflow: hidden;
 }
 
-#wallpapers img {
+.desktop .wallpaper {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Vignette Overlay - Modern atmospheric effect */
+/* Vignette Effect */
 #vignette {
   position: fixed;
   inset: 0;
@@ -110,19 +95,17 @@ img {
   z-index: 2;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.5s ease;
 }
 
 body.entered #vignette {
   opacity: 1;
 }
 
-/* ============================================================
-   WINDOWS XP WELCOME SCREEN - AUTHENTIC RECREATION
-   Based on: Windows XP Luna theme login dialog
-   ============================================================ */
+/* ============================================
+   WINDOWS XP LOGIN/WELCOME SCREEN
+   ============================================ */
 
-/* Welcome Screen Container - fills entire viewport */
 #welcome-screen {
   position: fixed;
   inset: 0;
@@ -132,61 +115,31 @@ body.entered #vignette {
   justify-content: center;
 }
 
-/* XP Logo container - positioned above the dialog */
-#xp-logo-container {
+/* XP Logo - positioned at top center */
+#xp-logo {
   position: absolute;
   top: 48px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1002;
-}
-
-#xp-logo {
+  z-index: 1001;
   width: 64px;
   height: 32px;
 }
 
-/* Stylized XP flag icon - using CSS triangles */
-#xp-logo-container #xp-flag-left,
-#xp-logo-container #xp-flag-right {
-  position: absolute;
-  top: 0;
-  background: var(--xp-navy);
+#xp-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-#xp-logo-container #xp-flag-left {
-  left: 0;
-  width: 12px;
-  height: 12px;
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-}
-
-#xp-logo-container #xp-flag-right {
-  left: 14px;
-  width: 24px;
-  height: 24px;
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-}
-
-/* XP text on logo */
-#xp-logo-container span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 10px;
-  color: #ffffff;
-  font-weight: bold;
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
-}
-
-/* Welcome Dialog - centered 280px wide XP dialog */
+/* Welcome Dialog - XP Classic Style */
 #welcome-dialog {
   position: relative;
   z-index: 1000;
+  min-width: 280px;
 }
 
-#welcome-card {
+#welcome-panel {
   background: var(--xp-bg);
   border: 2px solid var(--xp-navy);
   border-top-color: var(--xp-highlight);
@@ -200,16 +153,11 @@ body.entered #vignette {
   min-width: 280px;
 }
 
-#welcome-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* User Avatar - 56x56 circular with 3D border effect */
-#avatar-frame {
+/* Avatar Frame - 56x56 circular with 3D border */
+.avatar-container {
   width: 56px;
   height: 56px;
+  margin: 0 auto 12px;
   border-radius: 50%;
   border: 3px solid var(--xp-navy);
   border-bottom-color: var(--xp-shadow);
@@ -217,31 +165,36 @@ body.entered #vignette {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 12px;
+  overflow: hidden;
 }
 
-#user-avatar {
+.avatar {
   width: 48px;
   height: 48px;
   border-radius: 50%;
   object-fit: cover;
 }
 
+/* User Name */
 #user-name {
+  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
   font-size: 18px;
   font-weight: bold;
   color: var(--xp-text);
   margin: 0 0 8px;
-  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
+  line-height: 1.2;
 }
 
-#welcome-msg {
+/* Welcome Text */
+#welcome-text {
+  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
   font-size: 12px;
   color: #333333;
   margin: 0 0 24px;
+  line-height: 1.2;
 }
 
-/* XP Button - authentic 3D style */
+/* Enter Button - Authentic XP 3D Button */
 #enter-btn {
   background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%);
   border: 2px solid var(--xp-dark-shadow);
@@ -251,13 +204,13 @@ body.entered #vignette {
   border-bottom-color: var(--xp-shadow);
   border-radius: 0;
   padding: 6px 24px;
+  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
   font-size: 14px;
   font-weight: bold;
-  cursor: pointer;
   color: var(--xp-text);
+  cursor: pointer;
   box-shadow: 2px 2px 0 var(--xp-dark-shadow);
   transition: none;
-  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
 }
 
 #enter-btn:hover {
@@ -269,17 +222,20 @@ body.entered #vignette {
   box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
 }
 
-/* Windows XP Branding - footer text */
-#xp-branding {
+/* Windows XP Footer */
+#xp-version {
   margin-top: 16px;
+  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
   font-size: 12px;
+  font-weight: bold;
   color: #ffffff;
   text-shadow: 1px 1px 0 var(--xp-navy);
-  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
-  font-weight: bold;
 }
 
-/* Desktop Icons - XP native 48x48 icons with 16px spacing */
+/* ============================================
+   DESKTOP ICONS - XP Classic Style
+   ============================================ */
+
 #desktop-icons {
   position: absolute;
   bottom: 24px;
@@ -290,7 +246,7 @@ body.entered #vignette {
   gap: 16px;
 }
 
-.desktop-item {
+.desktop-icon {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -298,11 +254,11 @@ body.entered #vignette {
   user-select: none;
 }
 
-.desktop-item:active {
+.desktop-icon:active {
   transform: scale(0.95);
 }
 
-.icon-box {
+.icon-frame {
   width: 48px;
   height: 48px;
   background: var(--xp-bg);
@@ -311,6 +267,7 @@ body.entered #vignette {
   border-left-color: var(--xp-highlight);
   border-right-color: var(--xp-shadow);
   border-bottom-color: var(--xp-shadow);
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -318,30 +275,47 @@ body.entered #vignette {
   box-shadow: 1px 1px 0 var(--xp-dark-shadow);
 }
 
-.icon-box img {
+.system-icon {
   width: 32px;
   height: 32px;
-  object-fit: contain;
+  background: var(--xp-blue);
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.app-icon {
+  width: 32px;
+  height: 32px;
 }
 
 .icon-label {
+  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
   font-size: 11px;
   color: var(--xp-text);
   text-align: center;
   max-width: 64px;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
+  white-space: nowrap;
+  padding: 0 2px;
 }
 
-/* Taskbar - Authentic XP Luna dark blue gradient */
+/* ============================================
+   TASKBAR - XP Luna Theme
+   ============================================ */
+
 #taskbar {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   height: 36px;
-  background: linear-gradient(180deg, #003366 0%, #001a33 100%);
+  background: linear-gradient(180deg, var(--xp-dark-blue-taskbar) 0%, #001a33 100%);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 50;
   display: flex;
@@ -349,8 +323,13 @@ body.entered #vignette {
   padding: 0 4px;
 }
 
+#start-btn-area {
+  display: flex;
+  align-items: center;
+}
+
 #start-btn {
-  background: linear-gradient(180deg, #008000 0%, #006600 100%);
+  background: linear-gradient(180deg, var(--xp-start-green) 0%, var(--xp-start-green-dark) 100%);
   border: 2px solid var(--xp-dark-shadow);
   border-top-color: var(--xp-highlight);
   border-left-color: var(--xp-highlight);
@@ -359,12 +338,24 @@ body.entered #vignette {
   border-radius: 0;
   padding: 4px 12px;
   cursor: pointer;
-  margin-right: 8px;
   white-space: nowrap;
   font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
   font-weight: bold;
   color: #ffffff;
   box-shadow: 2px 2px 0 var(--xp-dark-shadow);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.start-logo {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.start-text {
+  font-size: 14px;
 }
 
 #start-btn:hover {
@@ -376,13 +367,37 @@ body.entered #vignette {
   box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
 }
 
-#taskbar-right {
+.taskbar-spacer {
+  flex: 1;
+  min-width: 8px;
+  margin-left: 8px;
+}
+
+#quick-launch {
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex: 1;
-  justify-content: flex-end;
-  padding-right: 8px;
+  margin-left: 8px;
+}
+
+.ql-item {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%);
+  border: 2px solid var(--xp-dark-shadow);
+  border-top-color: var(--xp-highlight);
+  border-left-color: var(--xp-highlight);
+  border-right-color: var(--xp-shadow);
+  border-bottom-color: var(--xp-shadow);
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--xp-text);
+  box-shadow: 2px 2px 0 var(--xp-dark-shadow);
+  cursor: default;
 }
 
 #taskbar-clock {
@@ -391,10 +406,11 @@ body.entered #vignette {
   color: var(--xp-clock);
   padding: 4px 12px;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  border-radius: 0;
+  margin-right: 4px;
 }
 
-/* Start Menu - Authentic XP style */
+/* Start Menu - XP Style */
 #start-menu {
   position: fixed;
   bottom: 36px;
@@ -404,6 +420,8 @@ body.entered #vignette {
   border: 2px solid var(--xp-navy);
   border-top-color: var(--xp-highlight);
   border-left-color: var(--xp-highlight);
+  border-right-color: var(--xp-shadow);
+  border-bottom-color: var(--xp-shadow);
   border-radius: 0;
   box-shadow: 3px 3px 0 var(--xp-dark-shadow);
   z-index: 1000;
@@ -411,7 +429,7 @@ body.entered #vignette {
   overflow: hidden;
 }
 
-.menu-user {
+.start-user {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -419,40 +437,40 @@ body.entered #vignette {
   border-bottom: 1px solid var(--xp-navy);
 }
 
-.menu-user img {
+.start-avatar {
   width: 32px;
   height: 32px;
   border-radius: 4px;
   border: 2px solid var(--xp-navy);
 }
 
-.menu-user strong {
+.start-name {
   font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
-  color: var(--xp-text);
-  font-weight: bold;
   font-size: 14px;
+  font-weight: bold;
+  color: var(--xp-text);
 }
 
-.menu-separator {
+.start-separator {
   height: 1px;
   background: var(--xp-navy);
   margin: 8px 0;
 }
 
-.menu-item {
+.start-item {
   padding: 10px 16px;
-  cursor: pointer;
   font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
   font-size: 14px;
   color: var(--xp-text);
+  cursor: pointer;
 }
 
-.menu-item:hover {
+.start-item:hover {
   background: var(--xp-blue);
   color: #ffffff;
 }
 
-/* Windows - Authentic XP window styling */
+/* Windows - XP Style */
 .window {
   position: fixed;
   background: var(--xp-bg);
@@ -503,14 +521,14 @@ body.entered #vignette {
   border: none;
   color: #ffffff;
   font-size: 12px;
+  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
+  font-weight: bold;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 0;
   padding: 0;
-  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
-  font-weight: bold;
 }
 
 .win-btn:hover {
@@ -523,6 +541,7 @@ body.entered #vignette {
   flex: 1;
   background: var(--xp-bg);
   color: var(--xp-text);
+  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
 }
 
 .window.maximized {
@@ -533,16 +552,18 @@ body.entered #vignette {
   border-radius: 0;
 }
 
-/* Music Island - Windows Media Player style corner player */
+/* Music Island - WMP Style */
 #music-island {
   position: fixed;
   bottom: 8px;
   right: 8px;
   z-index: 55;
-  background: linear-gradient(180deg, #003366 0%, #001a33 100%);
+  background: linear-gradient(180deg, var(--xp-dark-blue-taskbar) 0%, #001a33 100%);
   border: 2px solid var(--xp-navy);
   border-top-color: var(--xp-highlight);
   border-left-color: var(--xp-highlight);
+  border-right-color: var(--xp-shadow);
+  border-bottom-color: var(--xp-shadow);
   border-radius: 0;
   padding: 10px;
   display: none;
@@ -583,6 +604,7 @@ body.entered #music-island {
 }
 
 #island-title {
+  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
   font-size: 12px;
   font-weight: bold;
   color: #ffffff;
@@ -592,6 +614,7 @@ body.entered #music-island {
 }
 
 #island-artist {
+  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
   font-size: 10px;
   color: #cccccc;
   white-space: nowrap;
@@ -618,12 +641,12 @@ body.entered #music-island {
   height: 20px;
   cursor: pointer;
   font-size: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
   font-weight: bold;
   color: var(--xp-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 1px 1px 0 var(--xp-dark-shadow);
 }
 
@@ -631,7 +654,7 @@ body.entered #music-island {
   background: linear-gradient(180deg, #d0d0c0 0%, #b0b0a0 100%);
 }
 
-/* Mute Button - XP style 3D button */
+/* Mute Button */
 #mute-btn {
   position: fixed;
   top: 8px;
@@ -664,10 +687,10 @@ body.entered #mute-btn {
 }
 
 #mute-btn:hover {
-  background: linear-gradient(180deg, #d0d0d0 0%, #b0b0a0 100%);
+  background: linear-gradient(180deg, #d0d0c0 0%, #b0b0a0 100%);
 }
 
-/* Annotation Overlay - Dark themed panel */
+/* Annotation Overlay */
 #annotation-overlay {
   position: fixed;
   inset: 0;
@@ -707,6 +730,7 @@ body.entered #mute-btn {
 }
 
 #annotation-title {
+  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
   font-size: 18px;
   font-weight: bold;
   color: #ffffff;
@@ -714,6 +738,7 @@ body.entered #mute-btn {
 }
 
 #annotation-artist {
+  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
   color: #cccccc;
   font-size: 14px;
 }
@@ -728,12 +753,12 @@ body.entered #mute-btn {
   height: 20px;
   border-radius: 0;
   cursor: pointer;
+  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
-  font-weight: bold;
 }
 
 #annotation-close:hover {
@@ -800,79 +825,26 @@ body.entered #mute-btn {
   border-left-color: var(--xp-highlight);
 }
 
-/* Quick Launch Button on Taskbar */
-.quick-launch {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%);
-  border: 2px solid var(--xp-dark-shadow);
-  border-top-color: var(--xp-highlight);
-  border-left-color: var(--xp-highlight);
-  border-right-color: var(--xp-shadow);
-  border-bottom-color: var(--xp-shadow);
-  border-radius: 0;
-  cursor: pointer;
-  font-family: "Segoe UI", "Tahoma", "Verdana", "Arial", sans-serif;
-  font-size: 14px;
-  font-weight: bold;
-  color: var(--xp-text);
-  box-shadow: 2px 2px 0 var(--xp-dark-shadow);
-  margin-left: 8px;
-}
-
-.quick-launch:hover {
-  background: linear-gradient(180deg, #d0d0d0 0%, #b0b0a0 100%);
-}
-
-/* Responsive adjustments for mobile/small screens */
+/* Responsive */
 @media (max-width: 768px) {
-  #welcome-dialog {
-    margin: 16px;
+  .desktop-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: default;
+    user-select: none;
   }
 
-  #welcome-card {
-    padding: 16px;
-    min-width: 240px;
+  .desktop-icon:active {
+    transform: scale(0.95);
   }
 
-  #avatar-frame {
+  .icon-frame {
     width: 48px;
     height: 48px;
   }
 
-  #user-avatar {
-    width: 40px;
-    height: 40px;
-  }
-
-  #user-name {
-    font-size: 16px;
-  }
-
-  #welcome-msg {
-    font-size: 11px;
-  }
-
-  #enter-btn {
-    padding: 6px 20px;
-    font-size: 13px;
-  }
-
-  #desktop-icons {
-    left: 16px;
-    bottom: 16px;
-    gap: 16px;
-  }
-
-  .icon-box {
-    width: 48px;
-    height: 48px;
-  }
-
-  .icon-box img {
+  .system-icon, .app-icon {
     width: 32px;
     height: 32px;
   }
@@ -882,34 +854,50 @@ body.entered #mute-btn {
     max-width: 48px;
   }
 
+  .window {
+    min-width: 260px;
+  }
+
+  #welcome-dialog {
+    margin: 16px;
+  }
+
+  #welcome-panel {
+    padding: 16px;
+    min-width: 240px;
+  }
+
+  #user-name {
+    font-size: 16px;
+  }
+
+  #welcome-text {
+    font-size: 11px;
+  }
+
+  #enter-btn {
+    padding: 6px 20px;
+    font-size: 13px;
+  }
+
   #taskbar {
     height: 32px;
   }
 
   #start-btn {
     padding: 3px 10px;
+  }
+
+  .start-text {
     font-size: 12px;
   }
 
-  #taskbar-clock {
-    padding: 3px 10px;
+  .start-logo {
+    width: 14px;
+    height: 14px;
+  }
+
+  .start-name {
     font-size: 12px;
-  }
-
-  #music-island {
-    min-width: 140px;
-    padding: 8px;
-  }
-
-  #island-title {
-    font-size: 11px;
-  }
-
-  #island-artist {
-    font-size: 9px;
-  }
-
-  #start-menu {
-    width: 200px;
   }
 }

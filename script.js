@@ -398,13 +398,21 @@ function initDesktopIcons() {
   const icons = $("#desktop-icons");
   if (!icons) return;
 
-  icons.querySelectorAll(".desktop-item").forEach(icon => {
+  // Handle both .desktop-item (old) and .desktop-icon (new) for compatibility
+  icons.querySelectorAll(".desktop-item, .desktop-icon").forEach(icon => {
     icon.addEventListener("dblclick", () => {
       const app = icon.dataset.app;
-      if (app === "profile") openProfileWindow();
-      else if (app === "gallery") openGalleryWindow();
-      else if (app === "music") openMusicWindow();
-      else if (app === "wallpaper") openWallpaperWindow();
+      const file = icon.dataset.file;
+
+      if (app) {
+        if (app === "profile") openProfileWindow();
+        else if (app === "gallery") openGalleryWindow();
+        else if (app === "music") openMusicWindow();
+        else if (app === "wallpaper") openWallpaperWindow();
+      } else if (file) {
+        // Handle system file icons if needed
+        console.log(`System file: ${file}`);
+      }
     });
   });
 }
